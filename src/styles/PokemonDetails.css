@@ -1,0 +1,116 @@
+p{
+    margin: 5px;
+}
+
+h1{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+h2{
+    margin: 0px;
+}
+
+.details-flex-container {
+    display: flex;
+    justify-content: space-between; /* Space the children evenly */
+}
+
+.details-section {
+    flex: 1; /* Each child will take up equal space */
+    margin: 10px;
+    padding: 10px;
+}
+
+
+.pokemon-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+}
+
+.pokemon-info {
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    position: relative; /* Needed for absolute positioning inside */
+}
+
+.pokemon-image {
+    width: auto;
+    max-width: 260px;
+    height: auto;
+    max-height: 260px;
+}
+
+.pokemon-info ul {
+    padding-left: 20px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+
+
+.pokemon-info ul {
+    list-style: none;  /* Remove default list style/bullet points */
+    padding: 0;        /* Remove default padding */
+    margin: 0;         /* Remove default margins to align with the container edges */
+}
+
+.pokemon-info li {
+    padding: 5px 0;    /* Add padding for better readability */
+    word-wrap: break-word;  /* Ensure long words do not overflow */
+}
+
+/*Icons measurement*/
+
+.measurement{
+    padding: 5px;
+    color: black; /* Icon color, adjust as needed */
+}
+
+.measurement svg {
+    color: gray; /* Icon color, adjust as needed */
+    font-size: 20px; /* You can also adjust the size here if necessary */
+}
+
+.back-button {
+    position: absolute;
+    top: 10px; /* Adjust these values as needed */
+    left: 10px;
+    font-size: 30px;
+}
+
+.pokemon-image-container .nav-button {
+    background: none;
+    border: none;
+    color: #666; /* Icon color, adjust as needed */
+    cursor: pointer;
+    top: 50%; /* Center vertically */
+    font-size: 24px; /* Icon size, adjust as needed */
+    padding: 20px; /* Sufficient padding for clickable area */
+    z-index: 10; /* Ensure it's above other elements if needed */
+}
+
+
+/*Media queries*/
+@media (max-width: 600px) {
+    .pokemon-info {
+        width: 95%;
+        height: 100%;
+        padding: 10px;
+    }
+    .pokemon-image {
+        width: auto;
+        max-width: 200px;
+        height: auto;
+        max-height: 200px;
+    }
+}

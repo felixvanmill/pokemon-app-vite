@@ -1,0 +1,34 @@
+
+/*BackButton CSS*/
+.back-button {
+  background: none;
+  border: none;
+  color: #333; /* Adjust color to fit your app's theme */
+  font-size: 24px; /* Adjust size as needed */
+  cursor: pointer;
+  padding: 10px; /* Adjust padding as needed */
+  display: inline-block;
+  transition: color 0.3s ease;
+
+  /* Optional: Add a hover effect */
+  &:hover {
+    color: #555; /* Darken color on hover */
+  }
+
+  /* Optional: Add focus styling to improve accessibility */
+  &:focus {
+    outline: 2px solid #555; /* Add an outline on focus */
+  }
+}
+
+
+
+
+/*Media queries*/
+@media (max-width: 480px) {
+  .pokemon-card img {
+    max-width: 100px; /* Smaller max width on small screens */
+    max-height: 115px; /* Smaller max height corresponding to the width */
+  }
+}
+
