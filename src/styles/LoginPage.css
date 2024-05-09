@@ -42,7 +42,7 @@
     top: 0;
 }
 
-input {
+input#email, input#password {
     height: 50px;
     text-align: center;
     width: 60%;
@@ -58,15 +58,6 @@ input:focus {
     box-shadow: 0 4px 6px rgba(0, 100, 0, 0.25) inset;
 }
 
-button {
-    width: 200px;
-    background: #83BA36;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 60px;
-    border: 0px;
-    font-size: 22px;
-    margin-bottom: 10px;
-}
 
 .PokemonLogoBox {
     display: flex;
@@ -142,5 +133,15 @@ button {
 
 .Passwordframe{
     margin-bottom: 0px;
+}
+
+.LoginButton button, .RegisterToggle button{
+    width: 200px;
+    background: #83BA36;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 60px;
+    border: 0px;
+    font-size: 22px;
+    margin-bottom: 10px;
 }
 

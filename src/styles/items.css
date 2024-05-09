@@ -1,0 +1,99 @@
+/* General styles for the data grid container */
+.datagrid-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 60%;
+}
+
+/* Styling for the DataGrid */
+.MuiDataGrid-root {
+    border: none;
+}
+
+.MuiDataGrid-columnHeader,
+.MuiDataGrid-cell {
+    border-right: 1px solid #e0e0e0;
+}
+
+.MuiDataGrid-columnHeaders {
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 16px;
+}
+
+.MuiDataGrid-cell {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Hover effects for rows */
+.MuiDataGrid-row:hover {
+    background-color: #f9f9f9;
+}
+
+/* Styling for the headers */
+.MuiDataGrid-columnHeaderTitle {
+    font-weight: bold;
+}
+
+/* Hide the last border right on header and cells */
+.MuiDataGrid-columnHeader:last-child,
+.MuiDataGrid-cell:last-child {
+    border-right: none;
+}
+
+/* Styling pagination container */
+.MuiTablePagination-root {
+    border-top: 1px solid #e0e0e0;
+    background-color: #fff;
+}
+
+/* Customizing the checkbox selection */
+.MuiCheckbox-root {
+    color: #1976d2;  /* Primary blue color for checkbox */
+}
+
+/* Loading and error messages style */
+.loading, .error {
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+    color: #d32f2f; /* Red color for errors */
+}
+
+.loading {
+    color: #1976d2; /* Blue color for loading */
+}
+
+/* Specific targeting of pagination buttons */
+.MuiDataGrid-root .MuiButtonBase-root.MuiIconButton-root {
+    border-radius: 4px; /* Less rounded edges */
+    background-color: transparent; /* Clear background */
+    color: #1976d2; /* Consistent blue color */
+}
+
+.MuiDataGrid-root .MuiButtonBase-root.MuiIconButton-root:hover {
+    background-color: #e3f2fd; /* Light blue background on hover */
+}
+
+/* Specific styling for active and focused button states */
+.MuiDataGrid-root .MuiButtonBase-root.Mui-selected,
+.MuiDataGrid-root .MuiButtonBase-root:focus {
+    background-color: #bbdefb; /* Slightly darker blue for selection/focus */
+    color: #0d47a1; /* Darker blue text for better contrast */
+}
+
+/* Adjusting disabled buttons specifically */
+.MuiDataGrid-root .MuiButtonBase-root.Mui-disabled {
+    color: #9e9e9e; /* Grey color indicating disabled state */
+    background-color: #f5f5f5; /* Light grey background */
+}
+
+/* Styling for the SVG icons within the buttons */
+.MuiDataGrid-root .MuiSvgIcon-root {
+    color: inherit; /* Icon color matches the button text color */
+}
