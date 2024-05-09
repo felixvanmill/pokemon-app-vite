@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
-import '../styles/items.css';  // Ensure this path is correct based on your project structure
+import '../styles/items.css';
 
 const ItemsPage = () => {
     const [items, setItems] = useState([]);
@@ -18,7 +18,8 @@ const ItemsPage = () => {
                         id: item.name,
                         name: item.name,
                         category: itemDetails.data.category?.name || 'Unknown',
-                        price: itemDetails.data.cost || 'N/A'
+                        price: itemDetails.data.cost || 'N/A',
+                        effect: itemDetails.data.effect_entries?.[0]?.effect || 'No effect'
                     };
                 }));
                 setItems(itemsWithDetails);
@@ -34,8 +35,19 @@ const ItemsPage = () => {
     const columns = [
         { field: 'name', headerName: 'Item Name', width: 150 },
         { field: 'category', headerName: 'Category', width: 130 },
-        { field: 'price', headerName: 'Price', width: 90, type: 'number' }
+        { field: 'price', headerName: 'Price', width: 90, type: 'number' },
+        {
+            field: 'effect',
+            headerName: 'Effect',
+            flex: 1,  // This column will now flex to use available space
+            renderCell: (params) => (
+                <div title={params.value} style={{ whiteSpace: 'normal', lineHeight: 'normal', height: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {params.value}
+                </div>
+            )
+        }
     ];
+
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -47,8 +59,8 @@ const ItemsPage = () => {
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5, 10, 20]}
-                checkboxSelection
                 disableSelectionOnClick
+                autoHeight
             />
         </div>
     );
