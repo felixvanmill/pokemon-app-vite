@@ -13,3 +13,59 @@
 
 }
 
+/* items.css */
+
+/* Basic grid container styling */
+.datagrid-container {
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Style overrides for MUI DataGrid */
+.datagrid-container .MuiDataGrid-root {
+    border: none;
+}
+
+.MuiDataGrid-columnHeaders {
+    background-color: #f4f4f9;
+    color: #333;
+    font-size: 16px;
+}
+
+.MuiDataGrid-cell {
+    color: #666;
+    border-color: #e0e0e0;
+}
+
+.MuiDataGrid-cell:focus-within {
+    outline: none;
+}
+
+.MuiDataGrid-row:hover {
+    background-color: #f9f9fb;
+}
+
+/* Custom styling for the cells to improve readability */
+.MuiDataGrid-cellContent {
+    padding: 8px;
+}
+
+/* Adjustments for the loading and error messages */
+.loading-error-container {
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #ff6b6b;
+}
+
+.MuiDataGrid-cell {
+    height: auto !important; /* Override to ensure height is dynamic */
+    white-space: normal !important; /* Allow text wrapping */
+}
+
+.MuiDataGrid-row {
+    min-height: 1000px; /* Set a minimum height but allow expansion */
+}

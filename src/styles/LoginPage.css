@@ -1,5 +1,6 @@
 * {
     font-family: 'Jost', sans-serif;
+    box-sizing: border-box; /* Helps manage padding and borders */
 }
 
 .Loginboxframe {
@@ -7,14 +8,15 @@
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
+    width: 100%; /* Full width to support responsiveness */
 }
 
 .Loginframe {
     display: flex;
     justify-content: center;
-    min-width: 550px;
-    width: 40%;
-    max-width: 550px;
+    width: 100%; /* Dynamic width for responsiveness */
+    max-width: 550px; /* Max width set for larger screens */
+    margin: auto; /* Centering the frame */
     position: relative;
 }
 
@@ -23,7 +25,7 @@
 .LoginButton,
 .RegisterToggle {
     display: flex;
-    width: 90%;
+    width: 90%; /* Maintaining width to be responsive */
     justify-content: center;
 }
 
@@ -31,21 +33,20 @@
     background: #D9D9D9;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 60px;
-    border: 1px solid rgba(0, 0, 0, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 15px;
+    padding: 20px;
     transition: transform 0.5s ease, opacity 0.5s ease;
     width: 100%;
     position: absolute;
     top: 0;
 }
 
-input#email, input#password {
+input#email, input#password, #confirmPassword {
     height: 50px;
     text-align: center;
-    width: 60%;
+    width: 100%; /* Full width for responsiveness */
     margin-top: 10px;
     font-size: 16px;
     border-radius: 30px;
@@ -54,24 +55,19 @@ input#email, input#password {
     outline: none;
 }
 
-input:focus {
-    box-shadow: 0 4px 6px rgba(0, 100, 0, 0.25) inset;
-}
-
-
 .PokemonLogoBox {
     display: flex;
-    max-width: 782px;
     margin: auto;
     justify-content: center;
     align-items: center;
-    width: 70%;
+    width: 100%; /* Full width to support layout */
 }
 
 .PokemonLogo {
-    width: 100%;
-    height: auto;
-    display: block;
+    width: 70%; /* Default relative width */
+    height: auto; /* Maintains aspect ratio */
+    transition: width 0.5s ease-in-out; /* Smooth transition for width changes */
+    max-width: 700px;
 }
 
 .password-error,
@@ -79,69 +75,60 @@ input:focus {
     font-size: 0.8em;
     margin-top: 5px;
     text-align: center;
-    width: 90%;
-}
-
-.password-error {
-    color: red;
-}
-
-.server-message {
-    color: green;
-}
-
-.server-message.error {
-    color: red;
+    width: 100%; /* Use full width for error messages */
 }
 
 .hiddenForm {
-    transform: translateX(-100%);
+    transform: translateX(-100%); /* Slide out */
     opacity: 0;
 }
 
 .visibleForm {
-    transform: translateX(0);
+    transform: translateX(0); /* Slide in */
     opacity: 1;
 }
 
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-.LogInErrorContainer{
+.LogInErrorContainer,
+.RegisterErrorContainer {
     display: flex;
-    height: 25px;
     justify-content: center;
     text-align: center;
     align-items: center;
     width: 100%;
 }
 
-.RegisterErrorContainer{
-    display: flex;
-    height: 25px;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-    width: 100%;
-}
-
-.Passwordframe{
-    margin-bottom: 0px;
-}
-
-.LoginButton button, .RegisterToggle button{
+.LoginButton button, .RegisterToggle button {
     width: 200px;
     background: #83BA36;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 60px;
-    border: 0px;
+    border: none;
     font-size: 22px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
+.LoginButton button{
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .Loginframe {
+        max-width: none; /* Allow flexibility on smaller screens */
+        width: 90%;
+    }
+
+    input#email, input#password, #confirmPassword {
+        font-size: 14px; /* Smaller font size for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .Frame3 {
+        border-radius: 30px; /* Smaller radius for smaller screens */
+    }
+
+    .LoginButton button, .RegisterToggle button {
+        font-size: 18px; /* Smaller buttons on smaller screens */
+    }
+}

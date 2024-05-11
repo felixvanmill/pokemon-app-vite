@@ -1,5 +1,4 @@
-
-/*BackButton CSS*/
+/* Back Button Styles */
 .back-button {
   background: none;
   border: none;
@@ -9,26 +8,12 @@
   padding: 10px; /* Adjust padding as needed */
   display: inline-block;
   transition: color 0.3s ease;
-
-  /* Optional: Add a hover effect */
-  &:hover {
-    color: #555; /* Darken color on hover */
-  }
-
-  /* Optional: Add focus styling to improve accessibility */
-  &:focus {
-    outline: 2px solid #555; /* Add an outline on focus */
-  }
 }
 
-
-
-
-/*Media queries*/
-@media (max-width: 480px) {
-  .pokemon-card img {
-    max-width: 100px; /* Smaller max width on small screens */
-    max-height: 115px; /* Smaller max height corresponding to the width */
-  }
+.back-button:hover {
+  color: #555; /* Darken color on hover */
 }
 
+.back-button:focus {
+  outline: 2px solid #555; /* Add an outline on focus */
+}

@@ -39,7 +39,7 @@ const ItemsPage = () => {
         {
             field: 'effect',
             headerName: 'Effect',
-            flex: 1,  // This column will now flex to use available space
+            flex: 1,
             renderCell: (params) => (
                 <div title={params.value} style={{ whiteSpace: 'normal', lineHeight: 'normal', height: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {params.value}
@@ -47,7 +47,6 @@ const ItemsPage = () => {
             )
         }
     ];
-
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -61,6 +60,7 @@ const ItemsPage = () => {
                 rowsPerPageOptions={[5, 10, 20]}
                 disableSelectionOnClick
                 autoHeight
+                getRowHeight={() => 'auto'}  // Automatically adjust row height
             />
         </div>
     );
