@@ -8,26 +8,7 @@ import '../styles/PokemonDetails.css';
 import useBodyBackgroundColor from '../hooks/useBodyBackgroundColor';
 import useArrowKeyNavigation from '../hooks/useArrowKeyNavigation';
 
-const typeColors = {
-    normal: "#A8A878",
-    fire: "#F08030",
-    water: "#6890F0",
-    electric: "#F8D030",
-    grass: "#78C850",
-    ice: "#98D8D8",
-    fighting: "#C03028",
-    poison: "#A040A0",
-    ground: "#E0C068",
-    flying: "#A890F0",
-    psychic: "#F85888",
-    bug: "#A8B820",
-    rock: "#B8A038",
-    ghost: "#705898",
-    dragon: "#7038F8",
-    dark: "#705848",
-    steel: "#B8B8D0",
-    fairy: "#FFC0CB",
-};
+const MAX_STAT_VALUE = 150;
 
 function PokemonDetails() {
     const { pokemonId } = useParams();
@@ -51,12 +32,25 @@ function PokemonDetails() {
         loadPokemonDetails();
     }, [pokemonId]);
 
-    const backgroundColor = pokemonDetails ? typeColors[pokemonDetails.types[0].type.name] : 'transparent';
-    useBodyBackgroundColor(backgroundColor);
+    useBodyBackgroundColor('#f0f4f8');
     useArrowKeyNavigation(pokemonId, navigate);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
+
+    const renderStatBar = (stat) => {
+        const heightPercentage = (stat.base_stat / MAX_STAT_VALUE) * 100;
+        return (
+            <div className="stat-bar" key={stat.stat.name}>
+                <span className="stat-name">{stat.stat.name}</span>
+                <div className="bar-container">
+                    <div className="bar" style={{ height: `${heightPercentage}%` }}>
+                        {stat.base_stat}
+                    </div>
+                </div>
+            </div>
+        );
+    };
 
     return (
         <div className="pokemon-details-container">
@@ -103,12 +97,12 @@ function PokemonDetails() {
                             </ul>
                         </div>
                     </div>
-                    <h2>Statistics</h2>
-                    <ul>
-                        {pokemonDetails.stats.map((stat, index) => (
-                            <li key={index}>{stat.stat.name}: {stat.base_stat}</li>
-                        ))}
-                    </ul>
+                    <div className="statistics-section">
+                        <h2>Statistics</h2>
+                        <div className="statistics-bars">
+                            {pokemonDetails.stats.map(renderStatBar)}
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

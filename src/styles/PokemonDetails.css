@@ -1,77 +1,94 @@
-p{
+/* General styles for paragraphs and headings */
+p {
     margin: 5px;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.5;
 }
 
-h1{
+h1 {
     margin-top: 2px;
     margin-bottom: 2px;
+    font-family: 'Pokemon', sans-serif; /* Consider using a themed font */
+    color: #333;
 }
 
-h2{
+h2 {
     margin: 0px;
+    font-family: 'Pokemon', sans-serif; /* Consider using a themed font */
+    color: #555;
 }
 
+/* Flex container for details sections */
 .details-flex-container {
     display: flex;
-    justify-content: space-between; /* Space the children evenly */
+    justify-content: space-between;
+    flex-wrap: wrap; /* Make responsive by wrapping children */
+    gap: 10px; /* Add gap between children */
 }
 
+/* Styling individual details sections */
 .details-section {
-    flex: 1; /* Each child will take up equal space */
+    flex: 1;
     margin: 10px;
     padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
+/* Container for the Pokémon details */
 .pokemon-details-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     padding: 20px;
+    background: #f0f4f8;
+    min-height: 100vh; /* Ensure the container covers full height */
 }
 
+/* Main card for Pokémon information */
 .pokemon-info {
     border: 2px solid #ccc;
-    padding: 10px;
+    padding: 20px;
     border-radius: 10px;
     background-color: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 80%;
     max-width: 600px;
     text-align: center;
-    position: relative; /* Needed for absolute positioning inside */
+    position: relative;
+    margin-bottom: 20px;
 }
 
+/* Styling for the Pokémon image */
 .pokemon-image {
-    width: auto;
+    width: 100%;
     max-width: 260px;
     height: auto;
     max-height: 260px;
+    margin-bottom: 10px;
 }
 
+/* Unordered list styling inside the Pokémon info card */
 .pokemon-info ul {
-    padding-left: 20px;
+    padding-left: 0; /* Remove default padding */
     overflow: hidden;
     word-wrap: break-word;
+    list-style: none; /* Remove default list style/bullet points */
+    margin: 0; /* Remove default margins to align with the container edges */
 }
 
-
-
-.pokemon-info ul {
-    list-style: none;  /* Remove default list style/bullet points */
-    padding: 0;        /* Remove default padding */
-    margin: 0;         /* Remove default margins to align with the container edges */
-}
-
+/* List item styling inside the Pokémon info card */
 .pokemon-info li {
-    padding: 5px 0;    /* Add padding for better readability */
-    word-wrap: break-word;  /* Ensure long words do not overflow */
+    padding: 5px 0; /* Add padding for better readability */
+    word-wrap: break-word; /* Ensure long words do not overflow */
+    font-family: 'Arial', sans-serif;
+    color: #333;
 }
 
-/*Icons measurement*/
-
-.measurement{
+/* Styling for icons with measurement class */
+.measurement {
     padding: 5px;
     color: black; /* Icon color, adjust as needed */
 }
@@ -81,13 +98,19 @@ h2{
     font-size: 20px; /* You can also adjust the size here if necessary */
 }
 
+/* Back button styling */
 .back-button {
     position: absolute;
     top: 10px; /* Adjust these values as needed */
     left: 10px;
     font-size: 30px;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
+/* Navigation button styling */
 .pokemon-image-container .nav-button {
     background: none;
     border: none;
@@ -99,18 +122,79 @@ h2{
     z-index: 10; /* Ensure it's above other elements if needed */
 }
 
-
-/*Media queries*/
+/* Responsive adjustments */
 @media (max-width: 600px) {
     .pokemon-info {
         width: 95%;
-        height: 100%;
         padding: 10px;
     }
+
     .pokemon-image {
-        width: auto;
         max-width: 200px;
-        height: auto;
         max-height: 200px;
     }
+
+    .details-flex-container {
+        flex-direction: column; /* Stack sections vertically */
+    }
+
+    .back-button {
+        font-size: 24px;
+    }
+
+    .pokemon-image-container .nav-button {
+        font-size: 20px;
+    }
+}
+
+/* Styling for the statistics section */
+.statistics-section {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.statistics-bars {
+    display: flex;
+    justify-content: space-around;
+    height: 150px; /* Adjust as needed */
+}
+
+.stat-bar {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    width: 15%;
+    margin: 0 5px;
+}
+
+.stat-name {
+    font-size: 14px;
+    margin-top: 5px; /* Adjust this margin as needed */
+    text-align: center;
+    height: 50px;
+}
+
+.bar-container {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+}
+
+.bar {
+    background-color: #4caf50;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
 }

@@ -12,20 +12,24 @@
 .caught-non-caught-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around; /* Distributes space evenly */
+    justify-content: space-between; /* Distributes space evenly */
     flex-wrap: wrap; /* Enables wrapping on smaller screens */
     text-align: center;
     padding: 20px;
+    background-color: #ffffff; /* White background to highlight sections */
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Adds depth with shadow */
 }
 
-/* Styling for caught Pokemon list */
+/* Styling for caught and non-caught Pokemon lists */
 .pokemon-list-caught, .pokemon-list-not-caught {
     padding: 15px;
-    border: 2px solid #333; /* Darker border for better visibility */
+    border: 2px solid #4a90e2; /* Blue border for visibility and theme consistency */
     border-radius: 8px; /* Rounded corners */
     margin: 5px;
     flex: 1 1 200px; /* Flexibility and minimum width */
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    background-color: #eef2fa; /* Light blue background */
 }
 
 /* Styling for lists within caught and non-caught */
@@ -43,12 +47,24 @@
 /* Notes section styling */
 .notes-section {
     padding: 15px;
-    border: 2px solid #333;
+    border: 2px solid #4a90e2;
     margin-top: 20px; /* Added top margin */
     display: flex;
     flex-direction: column; /* Stack children vertically */
     width: 100%; /* Full width */
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background-color: #eef2fa; /* Light blue to match list sections */
+}
+
+/* Hover styles for list items to enhance interactivity */
+.pokemon-list-caught li:hover, .pokemon-list-not-caught li:hover {
+    background-color: #d1e0f0; /* Slightly darker shade of light blue on hover */
+    cursor: pointer;
+}
+
+.pokemon-list-caught ul {
+    column-count: 3;
+    column-gap: 20px;
 }
 
 /* Responsive adjustments with media queries */
