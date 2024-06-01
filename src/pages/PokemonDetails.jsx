@@ -5,7 +5,7 @@ import { fetchPokemonDetails } from '../services/fetchPokemons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faArrowsAltV, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import '../styles/PokemonDetails.css';
-import useBodyBackgroundColor from '../hooks/useBodyBackgroundColor';
+
 import useArrowKeyNavigation from '../hooks/useArrowKeyNavigation';
 
 const MAX_STAT_VALUE = 150;
@@ -32,7 +32,6 @@ function PokemonDetails() {
         loadPokemonDetails();
     }, [pokemonId]);
 
-    useBodyBackgroundColor('#D9D9D9');
     useArrowKeyNavigation(pokemonId, navigate);
 
     if (loading) return <div>Loading...</div>;

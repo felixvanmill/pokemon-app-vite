@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import '../styles/MyPokemonPage.css';
-
-const ItemType = {
-    POKEMON: 'pokemon',
-};
+import { fetchPokemonDetails, fetchNotCaughtPokemons } from '../services/api';
+import DropArea from '../components/DropArea';
+import PokemonItem from '../components/PokemonItem.jsx';
 
 const MyPokemonPage = () => {
     const [caughtPokemons, setCaughtPokemons] = useState(() => {
         const stored = localStorage.getItem('caughtPokemons');
-        return stored ? JSON.parse(stored).sort((a, b) => a.name.localeCompare(b.name)) : [];
+        return stored ? JSON.parse(stored).sort((a, b) => a.id - b.id) : [];
     });
     const [notCaughtPokemons, setNotCaughtPokemons] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
@@ -19,24 +18,48 @@ const MyPokemonPage = () => {
     const [notes, setNotes] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedResults, setSelectedResults] = useState({});
+    const [notesIndicator, setNotesIndicator] = useState({});
+
+    const mainContainerRef = useRef(null);
 
     useEffect(() => {
         localStorage.setItem('caughtPokemons', JSON.stringify(caughtPokemons));
-        fetchNotCaughtPokemons();
+        fetchNotCaughtPokemons(caughtPokemons).then(setNotCaughtPokemons);
+        updateNotesIndicator();
     }, [caughtPokemons]);
 
-    const fetchNotCaughtPokemons = async () => {
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
-        const allPokemonNames = response.data.results.map(pokemon => pokemon.name);
-        const caughtPokemonNames = caughtPokemons.map(pokemon => pokemon.name);
-        const notCaught = allPokemonNames.filter(name => !caughtPokemonNames.includes(name));
-        const notCaughtPokemons = await Promise.all(
-            notCaught.map(async name => {
-                const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
-                return { name, image: response.data.sprites.front_default };
-            })
-        );
-        setNotCaughtPokemons(notCaughtPokemons.sort((a, b) => a.name.localeCompare(b.name)));
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                mainContainerRef.current &&
+                !mainContainerRef.current.contains(event.target) &&
+                !event.target.closest('.notes-container')
+            ) {
+                setSelectedPokemon(null);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
+    const updateNotesIndicator = () => {
+        const newNotesIndicator = {};
+        caughtPokemons.forEach(pokemon => {
+            const note = localStorage.getItem(`notes_${pokemon.name}`);
+            if (note) {
+                newNotesIndicator[pokemon.name] = true;
+            }
+        });
+        notCaughtPokemons.forEach(pokemon => {
+            const note = localStorage.getItem(`notes_${pokemon.name}`);
+            if (note) {
+                newNotesIndicator[pokemon.name] = true;
+            }
+        });
+        setNotesIndicator(newNotesIndicator);
     };
 
     const handleSearch = async (query) => {
@@ -45,29 +68,35 @@ const MyPokemonPage = () => {
             setSearchResults([]);
             return;
         }
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=151`);
+        const response = await axios.get(`${API_BASE_URL}?limit=151`);
         const filteredPokemons = response.data.results.filter(pokemon =>
             pokemon.name.includes(query.toLowerCase())
         );
-        setSearchResults(filteredPokemons);
+        const detailedPokemons = await Promise.all(
+            filteredPokemons.map(async (pokemon) => {
+                const details = await fetchPokemonDetails(pokemon.name);
+                return { name: pokemon.name, id: details.id, image: details.image };
+            })
+        );
+        setSearchResults(detailedPokemons);
     };
 
-    const handleAddPokemon = async (selectedPokemons) => {
+    const handleAddPokemon = (selectedPokemons) => {
         const newCaughtPokemons = [...caughtPokemons];
-        for (const pokemon of selectedPokemons) {
+        selectedPokemons.forEach(pokemon => {
             if (!newCaughtPokemons.find(p => p.name === pokemon.name)) {
-                const response = await axios.get(pokemon.url);
-                const newPokemon = { name: pokemon.name, image: response.data.sprites.front_default };
-                newCaughtPokemons.push(newPokemon);
+                newCaughtPokemons.push(pokemon);
             }
-        }
-        setCaughtPokemons(newCaughtPokemons.sort((a, b) => a.name.localeCompare(b.name)));
+        });
+        setCaughtPokemons(newCaughtPokemons.sort((a, b) => a.id - b.id));
         setSearchQuery("");  // Clear the search input
         setSearchResults([]);  // Clear the search results
         setSelectedResults({});  // Clear the selected results
+        updateNotesIndicator();
     };
 
-    const handleSelectPokemon = (pokemon) => {
+    const handleSelectPokemon = (pokemon, event) => {
+        event.stopPropagation(); // Prevent the click from propagating to the main container
         setSelectedPokemon(pokemon);
         const retrievedNotes = localStorage.getItem(`notes_${pokemon.name}`) || "";
         setNotes(retrievedNotes);
@@ -77,17 +106,19 @@ const MyPokemonPage = () => {
         if (selectedPokemon) {
             localStorage.setItem(`notes_${selectedPokemon.name}`, note);
             setNotes(note);
+            updateNotesIndicator();
         }
     };
 
     const handleReleasePokemon = (pokemonName) => {
         const updatedCaughtPokemons = caughtPokemons.filter(pokemon => pokemon.name !== pokemonName);
-        setCaughtPokemons(updatedCaughtPokemons.sort((a, b) => a.name.localeCompare(b.name)));
+        setCaughtPokemons(updatedCaughtPokemons.sort((a, b) => a.id - b.id));
         if (selectedPokemon && selectedPokemon.name === pokemonName) {
             setSelectedPokemon(null);
             setNotes("");
         }
         localStorage.removeItem(`notes_${pokemonName}`);
+        updateNotesIndicator();
     };
 
     const handleCheckboxChange = (pokemon, checked) => {
@@ -104,14 +135,20 @@ const MyPokemonPage = () => {
 
     const handleMoveToCaught = (pokemonName) => {
         const movedPokemon = notCaughtPokemons.find(pokemon => pokemon.name === pokemonName);
-        setCaughtPokemons([...caughtPokemons, movedPokemon].sort((a, b) => a.name.localeCompare(b.name)));
-        setNotCaughtPokemons(notCaughtPokemons.filter(pokemon => pokemon.name !== pokemonName).sort((a, b) => a.name.localeCompare(b.name)));
+        setCaughtPokemons([...caughtPokemons, movedPokemon].sort((a, b) => a.id - b.id));
+        setNotCaughtPokemons(notCaughtPokemons.filter(pokemon => pokemon.name !== pokemonName).sort((a, b) => a.id - b.id));
+        updateNotesIndicator();
     };
 
     const handleMoveToNotCaught = (pokemonName) => {
         const movedPokemon = caughtPokemons.find(pokemon => pokemon.name === pokemonName);
-        setNotCaughtPokemons([...notCaughtPokemons, movedPokemon].sort((a, b) => a.name.localeCompare(b.name)));
-        setCaughtPokemons(caughtPokemons.filter(pokemon => pokemon.name !== pokemonName).sort((a, b) => a.name.localeCompare(b.name)));
+        setNotCaughtPokemons([...notCaughtPokemons, movedPokemon].sort((a, b) => a.id - b.id));
+        setCaughtPokemons(caughtPokemons.filter(pokemon => pokemon.name !== pokemonName).sort((a, b) => a.id - b.id));
+        updateNotesIndicator();
+    };
+
+    const handleViewDetails = (pokemonId) => {
+        window.open(`http://localhost:5173/pokemon/${pokemonId}`, '_blank');
     };
 
     const renderCaughtPokemon = (pokemon) => (
@@ -121,6 +158,9 @@ const MyPokemonPage = () => {
             onRelease={handleMoveToNotCaught}
             onCatch={null}
             onSelect={handleSelectPokemon}
+            onViewDetails={handleViewDetails}
+            isSelected={selectedPokemon && selectedPokemon.name === pokemon.name}
+            hasNote={notesIndicator[pokemon.name]}
         />
     );
 
@@ -131,108 +171,76 @@ const MyPokemonPage = () => {
             onCatch={handleMoveToCaught}
             onRelease={null}
             onSelect={handleSelectPokemon}
+            onViewDetails={handleViewDetails}
+            isSelected={selectedPokemon && selectedPokemon.name === pokemon.name}
+            hasNote={notesIndicator[pokemon.name]}
         />
     );
 
     return (
         <DndProvider backend={HTML5Backend}>
             <div className="general-container">
-            <div className="main-container">
-                <div className="search-container">
-                    <h2>Search Pokémon</h2>
-                    <input
-                        type="text"
-                        placeholder="Search for Pokémon..."
-                        value={searchQuery}
-                        onChange={(e) => handleSearch(e.target.value)}
-                    />
-                    {searchResults.length > 0 && (
-                        <div className="search-results">
-                            {searchResults.map(pokemon => (
-                                <div key={pokemon.name} className="search-result-item">
-                                    <input
-                                        type="checkbox"
-                                        checked={!!selectedResults[pokemon.name]}
-                                        onChange={(e) => handleCheckboxChange(pokemon, e.target.checked)}
-                                    />
-                                    <span>{pokemon.name}</span>
-                                </div>
-                            ))}
-                            <button onClick={handleAddSelectedPokemons}>Add Selected</button>
-                        </div>
-                    )}
-                </div>
-                <DropArea onDropPokemon={handleMoveToCaught}>
-                    <div className="caught-pokemon-container">
-                        <h2>Caught Pokémon</h2>
-                        <div className="caught-pokemon-list">
-                            {caughtPokemons.map(renderCaughtPokemon)}
-                        </div>
-                        {caughtPokemons.length > 0 && (
-                            <button className="clear-all-button" onClick={() => setCaughtPokemons([])}>Clear All</button>
+                <div className="main-container" ref={mainContainerRef} onClick={() => setSelectedPokemon(null)}>
+                    <div className="search-container">
+                        <h2>Search Pokémon</h2>
+                        <input
+                            type="text"
+                            placeholder="Search for Pokémon..."
+                            value={searchQuery}
+                            onChange={(e) => handleSearch(e.target.value)}
+                        />
+                        {searchResults.length > 0 && (
+                            <div className="search-results">
+                                {searchResults.map(pokemon => (
+                                    <div key={pokemon.name} className="search-result-item">
+                                        <input
+                                            type="checkbox"
+                                            checked={!!selectedResults[pokemon.name]}
+                                            onChange={(e) => handleCheckboxChange(pokemon, e.target.checked)}
+                                        />
+                                        <span>#{pokemon.id} {pokemon.name}</span>
+                                    </div>
+                                ))}
+                                <button onClick={handleAddSelectedPokemons}>Add Selected</button>
+                            </div>
                         )}
                     </div>
-                </DropArea>
-                {selectedPokemon && (
-                    <div className="notes-container">
-                        <h3>Notes for {selectedPokemon.name}</h3>
-                        <textarea
-                            value={notes}
-                            onChange={(e) => setNotes(e.target.value)}
-                            onBlur={() => handleSaveNote(notes)}
-                            rows="4"
-                            cols="50"
-                        />
-                    </div>
-                )}
-                <DropArea onDropPokemon={handleMoveToNotCaught}>
-                    <div className="not-caught-pokemon-container">
-                        <h2>Not Caught Pokémon</h2>
-                        <div className="not-caught-pokemon-list">
-                            {notCaughtPokemons.map(renderNotCaughtPokemon)}
+                    <DropArea onDropPokemon={handleMoveToCaught}>
+                        <div className="caught-pokemon-container">
+                            <h2>Caught Pokémon</h2>
+                            <div className="caught-pokemon-list">
+                                {caughtPokemons.map(renderCaughtPokemon)}
+                            </div>
+                            {caughtPokemons.length > 0 && (
+                                <button className="clear-all-button" onClick={() => setCaughtPokemons([])}>Clear All</button>
+                            )}
                         </div>
-                    </div>
-                </DropArea>
-            </div>
+                    </DropArea>
+                    {selectedPokemon && (
+                        <div className="notes-container" onClick={(e) => e.stopPropagation()}>
+                            <fieldset className="notes-fieldset">
+                                <legend>Notes for {selectedPokemon.name}</legend>
+                                <textarea
+                                    value={notes}
+                                    onChange={(e) => setNotes(e.target.value)}
+                                    onBlur={() => handleSaveNote(notes)}
+                                    rows="4"
+                                    cols="50"
+                                />
+                            </fieldset>
+                        </div>
+                    )}
+                    <DropArea onDropPokemon={handleMoveToNotCaught}>
+                        <div className="not-caught-pokemon-container">
+                            <h2>Not Caught Pokémon</h2>
+                            <div className="not-caught-pokemon-list">
+                                {notCaughtPokemons.map(renderNotCaughtPokemon)}
+                            </div>
+                        </div>
+                    </DropArea>
+                </div>
             </div>
         </DndProvider>
-    );
-};
-
-const DropArea = ({ onDropPokemon, children }) => {
-    const [, drop] = useDrop({
-        accept: ItemType.POKEMON,
-        drop: (item) => onDropPokemon(item.name),
-    });
-
-    return (
-        <div ref={drop} style={{ width: '100%' }}>
-            {children}
-        </div>
-    );
-};
-
-const PokemonItem = ({ pokemon, onRelease, onCatch, onSelect }) => {
-    const [{ isDragging }, drag] = useDrag(() => ({
-        type: ItemType.POKEMON,
-        item: { name: pokemon.name },
-        collect: (monitor) => ({
-            isDragging: !!monitor.isDragging(),
-        }),
-    }));
-
-    return (
-        <div
-            ref={drag}
-            className="pokemon-item"
-            style={{ opacity: isDragging ? 0.5 : 1 }}
-            onClick={() => onSelect(pokemon)}
-        >
-            <img src={pokemon.image} alt={pokemon.name} />
-            <span>{pokemon.name}</span>
-            {onRelease && <button onClick={() => onRelease(pokemon.name)}>Release</button>}
-            {onCatch && <button onClick={() => onCatch(pokemon.name)}>Catch</button>}
-        </div>
     );
 };
 

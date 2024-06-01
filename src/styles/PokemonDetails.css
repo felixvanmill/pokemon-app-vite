@@ -1,4 +1,6 @@
-
+body {
+    background-color: #f9f9f9;
+}
 /* General styles for paragraphs and headings */
 p {
     margin: 5px;
@@ -63,7 +65,7 @@ body > .parent-container {
     align-items: center;
     padding: 20px;
     background: #D9D9D9; /* Background color specific to this container */
-    min-height: 70vh; /* Ensure the container covers at least 70% of the viewport height */
+    min-height: 100vh; /* Ensure the container covers at least 70% of the viewport height */
     width: 100%;
     box-sizing: border-box;
     flex-grow: 1; /* Ensure it grows to fill the remaining space */
@@ -71,6 +73,9 @@ body > .parent-container {
 
 /* Main card for Pokémon information */
 .pokemon-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensure the statistics section stays at the bottom */
     border: 2px solid #ccc;
     padding: 20px;
     border-radius: 10px;
@@ -84,7 +89,7 @@ body > .parent-container {
     box-sizing: border-box;
     flex: 1 1 auto; /* Allow to grow and shrink */
     min-width: 300px; /* Minimum width it can shrink to */
-    max-height: 90vh;
+    max-height: 800px;
 }
 
 /* Container for the Pokémon image */
@@ -248,6 +253,19 @@ body > .parent-container {
     z-index: 1;
 }
 
-body{
+body {
     background-color: #D9D9D9;
+}
+
+.info-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #007bff;
+    cursor: pointer;
+    display: none;
+}
+
+.pokemon-item:hover .info-icon {
+    display: block;
 }
