@@ -1,6 +1,5 @@
 /* Navigation Bar Styles */
 .Navbar {
-    height: 70px;
     display: flex;
     justify-content: center;
     position: relative;
@@ -9,7 +8,7 @@
 .Navigation {
     width: 100%;
     height: 50px;
-    background: #0075BE;
+    background-color: #0075BE;
     display: flex;
     justify-content: flex-end;
 }

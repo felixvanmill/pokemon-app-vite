@@ -3,13 +3,16 @@
     grid-template-columns: repeat(auto-fit, minmax(202px, 1fr));
     gap: 20px;
     padding: 20px;
+    background-color: white;
+    padding-left: 150px;
+    padding-right: 150px;
 }
 
 .pokemon-card {
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     text-align: center;
     padding: 10px;
-    background-color: #fff;
+    background-color: #D9D9D9;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -29,4 +32,5 @@
     justify-content: center; /* Centers children horizontally */
     align-items: center; /* Centers children vertically, if needed */
     padding: 20px; /* Adds some padding around the search container */
+    background-color: white;
 }

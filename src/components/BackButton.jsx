@@ -6,9 +6,9 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 const BackButton = ({ className = "back-button", ariaLabel = "Go back" }) => {
     const navigate = useNavigate();
 
-    // Functie om naar de vorige pagina te gaan
+    // Function to navigate to the Pokémon list page
     const handleBack = () => {
-        navigate(-1);  // Navigatie voor een pagina terug
+        navigate('/pokemon');  // Navigate to Pokémon list page
     };
 
     return (

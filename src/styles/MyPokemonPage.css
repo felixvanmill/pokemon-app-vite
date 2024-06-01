@@ -1,84 +1,200 @@
-/* Main container styling */
+.general-container{
+    background-color: #D9D9D9;
+    padding-top: 15px;
+}
+
 .main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    max-width: 1200px; /* Limits max container width */
+    padding: 20px 50px;
+    background-color: #fff;
+    margin-right: 20%;
+    max-width: 1200px;
+    margin-left:20% ;
+    padding-top: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
 }
 
-/* Flex container for both caught and non-caught Pokemon lists */
-.caught-non-caught-container {
+.search-container, .caught-pokemon-container, .not-caught-pokemon-container, .notes-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.search-container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between; /* Distributes space evenly */
-    flex-wrap: wrap; /* Enables wrapping on smaller screens */
-    text-align: center;
-    padding: 20px;
-    background-color: #ffffff; /* White background to highlight sections */
-    border-radius: 8px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Adds depth with shadow */
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Styling for caught and non-caught Pokemon lists */
-.pokemon-list-caught, .pokemon-list-not-caught {
-    padding: 15px;
-    border: 2px solid #4a90e2; /* Blue border for visibility and theme consistency */
-    border-radius: 8px; /* Rounded corners */
-    margin: 5px;
-    flex: 1 1 200px; /* Flexibility and minimum width */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-    background-color: #eef2fa; /* Light blue background */
+h2, h3 {
+    color: #333;
 }
 
-/* Styling for lists within caught and non-caught */
-.pokemon-list-caught ul, .pokemon-list-not-caught ul {
-    list-style-type: none;
-    padding: 0;
+.search-container input {
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
 }
 
-/* Specific styles for non-caught Pokemon list */
-.pokemon-list-not-caught ul {
-    column-count: 3; /* Adjusted for better column management */
-    column-gap: 20px;
-}
-
-/* Notes section styling */
-.notes-section {
-    padding: 15px;
-    border: 2px solid #4a90e2;
-    margin-top: 20px; /* Added top margin */
+.search-results {
     display: flex;
-    flex-direction: column; /* Stack children vertically */
-    width: 100%; /* Full width */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    background-color: #eef2fa; /* Light blue to match list sections */
+    flex-direction: column;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fafafa;
+    margin-top: 5px;
+    padding: 10px;
 }
 
-/* Hover styles for list items to enhance interactivity */
-.pokemon-list-caught li:hover, .pokemon-list-not-caught li:hover {
-    background-color: #d1e0f0; /* Slightly darker shade of light blue on hover */
+.search-result-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item input {
+    margin-right: 10px;
+}
+
+.search-result-item span {
+    flex-grow: 1;
+}
+
+.search-results button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    align-self: flex-end;
+    transition: background-color 0.3s;
 }
 
-.pokemon-list-caught ul {
-    column-count: 3;
-    column-gap: 20px;
+.search-results button:hover {
+    background-color: #218838;
 }
 
-/* Responsive adjustments with media queries */
-@media (max-width: 768px) {
-    .caught-non-caught-container {
-        flex-direction: column;
-    }
-    .pokemon-list-not-caught ul {
-        column-count: 2; /* Fewer columns on smaller screens */
-    }
+.caught-pokemon-container, .not-caught-pokemon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-@media (max-width: 480px) {
-    .pokemon-list-not-caught ul {
-        column-count: 1; /* Single column on very small screens */
-    }
+.caught-pokemon-list, .not-caught-pokemon-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.pokemon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pokemon-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pokemon-item img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.pokemon-item span {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.pokemon-item button {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.pokemon-item button:hover {
+    background-color: #c82333;
+}
+
+.not-caught-pokemon-item button {
+    background-color: #007bff;
+}
+
+.not-caught-pokemon-item button:hover {
+    background-color: #0056b3;
+}
+
+.notes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.notes-container textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.clear-all-button {
+    background-color: #ff4444;
+    margin-top: 20px;
+}
+
+.clear-all-button:hover {
+    background-color: #cc0000;
 }

@@ -1,3 +1,4 @@
+
 /* General styles for paragraphs and headings */
 p {
     margin: 5px;
@@ -10,12 +11,14 @@ h1 {
     margin-bottom: 2px;
     font-family: 'Pokemon', sans-serif; /* Consider using a themed font */
     color: #333;
+    text-transform: capitalize;
 }
 
 h2 {
     margin: 0px;
     font-family: 'Pokemon', sans-serif; /* Consider using a themed font */
     color: #555;
+    font-size: 25px !important;
 }
 
 /* Flex container for details sections */
@@ -36,6 +39,22 @@ h2 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Ensure the body and HTML elements have the same background */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure the parent container uses flex and fills the height */
+body > .parent-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
 /* Container for the Pokémon details */
 .pokemon-details-container {
     display: flex;
@@ -43,8 +62,11 @@ h2 {
     justify-content: flex-start;
     align-items: center;
     padding: 20px;
-    background: #f0f4f8;
-    min-height: 100vh; /* Ensure the container covers full height */
+    background: #D9D9D9; /* Background color specific to this container */
+    min-height: 70vh; /* Ensure the container covers at least 70% of the viewport height */
+    width: 100%;
+    box-sizing: border-box;
+    flex-grow: 1; /* Ensure it grows to fill the remaining space */
 }
 
 /* Main card for Pokémon information */
@@ -59,6 +81,20 @@ h2 {
     text-align: center;
     position: relative;
     margin-bottom: 20px;
+    box-sizing: border-box;
+    flex: 1 1 auto; /* Allow to grow and shrink */
+    min-width: 300px; /* Minimum width it can shrink to */
+    max-height: 90vh;
+}
+
+/* Container for the Pokémon image */
+.pokemon-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex: 1 1 auto; /* Allow to grow and shrink */
+    min-width: 200px; /* Minimum width it can shrink to */
 }
 
 /* Styling for the Pokémon image */
@@ -68,6 +104,8 @@ h2 {
     height: auto;
     max-height: 260px;
     margin-bottom: 10px;
+    flex: 1 1 auto; /* Allow to grow and shrink */
+    min-width: 150px; /* Minimum width it can shrink to */
 }
 
 /* Unordered list styling inside the Pokémon info card */
@@ -87,10 +125,21 @@ h2 {
     color: #333;
 }
 
+/* Flex container for measurement icons */
+.Measurements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Add gap between measurement items */
+    justify-content: center; /* Center items horizontally */
+}
+
 /* Styling for icons with measurement class */
 .measurement {
     padding: 5px;
     color: black; /* Icon color, adjust as needed */
+    display: flex; /* Ensure measurement divs are flex items */
+    align-items: center; /* Center items vertically */
+    gap: 5px; /* Add space between icon and text */
 }
 
 .measurement svg {
@@ -108,6 +157,7 @@ h2 {
     background: none;
     border: none;
     cursor: pointer;
+    z-index: 1000; /* Ensure it is above other elements */
 }
 
 /* Navigation button styling */
@@ -186,7 +236,6 @@ h2 {
 }
 
 .bar {
-    background-color: #4caf50;
     width: 100%;
     border-radius: 5px 5px 0 0;
     display: flex;
@@ -197,4 +246,8 @@ h2 {
     font-weight: bold;
     position: relative;
     z-index: 1;
+}
+
+body{
+    background-color: #D9D9D9;
 }

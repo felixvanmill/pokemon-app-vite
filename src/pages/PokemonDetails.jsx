@@ -32,19 +32,31 @@ function PokemonDetails() {
         loadPokemonDetails();
     }, [pokemonId]);
 
-    useBodyBackgroundColor('#f0f4f8');
+    useBodyBackgroundColor('#D9D9D9');
     useArrowKeyNavigation(pokemonId, navigate);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
+    const getStatColor = (statValue) => {
+        const ratio = statValue / MAX_STAT_VALUE;
+        if (ratio <= 0.3) {
+            return 'red';
+        } else if (ratio <= 0.5) {
+            return '#fff51070';
+        } else {
+            return 'green';
+        }
+    };
+
     const renderStatBar = (stat) => {
         const heightPercentage = (stat.base_stat / MAX_STAT_VALUE) * 100;
+        const barColor = getStatColor(stat.base_stat);
         return (
             <div className="stat-bar" key={stat.stat.name}>
-                <span className="stat-name">{stat.stat.name}</span>
+                <span className="stat-name">{stat.stat.name === 'hp' ? 'HP' : stat.stat.name}</span>
                 <div className="bar-container">
-                    <div className="bar" style={{ height: `${heightPercentage}%` }}>
+                    <div className="bar" style={{ height: `${heightPercentage}%`, backgroundColor: barColor }}>
                         {stat.base_stat}
                     </div>
                 </div>
@@ -73,11 +85,13 @@ function PokemonDetails() {
                         )}
                     </div>
                     <h1>{pokemonDetails.name} (#{pokemonDetails.id})</h1>
+                    <div className="Measurements">
                     <div className="measurement">
                         <FontAwesomeIcon icon={faArrowsAltV}/> <span>Height: {pokemonDetails.height / 10} m</span>
                     </div>
                     <div className="measurement">
                         <FontAwesomeIcon icon={faWeightHanging}/> <span>Weight: {pokemonDetails.weight / 10} kg</span>
+                    </div>
                     </div>
                     <div className="details-flex-container">
                         <div className="details-section">
