@@ -19,7 +19,8 @@ const ItemsPage = () => {
                         name: item.name,
                         category: itemDetails.data.category?.name || 'Unknown',
                         price: itemDetails.data.cost || 'N/A',
-                        effect: itemDetails.data.effect_entries?.[0]?.effect || 'No effect'
+                        effect: itemDetails.data.effect_entries?.[0]?.effect || 'No effect',
+                        sprite: itemDetails.data.sprites?.default || ''
                     };
                 }));
                 setItems(itemsWithDetails);
@@ -33,13 +34,21 @@ const ItemsPage = () => {
     }, []);
 
     const columns = [
+        {
+            field: 'sprite',
+            headerName: '',
+            width: 50,
+            renderCell: (params) => (
+                <img src={params.value} alt={params.row.name} style={{ width: '40px', height: '40px' }} />
+            )
+        },
         { field: 'name', headerName: 'Item Name', width: 150 },
         { field: 'category', headerName: 'Category', width: 130 },
         { field: 'price', headerName: 'Price', width: 90, type: 'number' },
         {
             field: 'effect',
             headerName: 'Effect',
-            flex: 1,
+            width: 300,
             renderCell: (params) => (
                 <div title={params.value} style={{ whiteSpace: 'normal', lineHeight: 'normal', height: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {params.value}
@@ -52,16 +61,18 @@ const ItemsPage = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className="datagrid-container">
-            <DataGrid
-                rows={items}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5, 10, 20]}
-                disableSelectionOnClick
-                autoHeight
-                getRowHeight={() => 'auto'}  // Automatically adjust row height
-            />
+        <div className="outer-container">
+            <div className="datagrid-container">
+                <DataGrid
+                    rows={items}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5, 10, 20]}
+                    disableSelectionOnClick
+                    autoHeight
+                    getRowHeight={() => 'auto'}  // Automatically adjust row height
+                />
+            </div>
         </div>
     );
 };

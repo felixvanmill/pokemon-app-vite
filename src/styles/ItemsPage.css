@@ -1,42 +1,62 @@
-.ItemsTableContainer{
+body {
+    background-color: #D9D9D9;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.general-container {
+    background-color: #D9D9D9;
+    padding-top: 15px;
+}
+
+.main-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    padding: 20px 50px;
+    background-color: #fff;
+    margin-right: 20%;
+    max-width: 1200px;
+    margin-left: 20%;
+    padding-top: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
 }
 
-.datagrid-container{
-    padding-left: 10%;
-    padding-right: 10%;
+.outer-container {
+    background-color: #D9D9D9;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    width: 100%; /* Ensure it takes the full width of the parent */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
-.MuiDataGrid-root{
-
-}
-
-/* ItemsPage.css */
-
-/* Basic grid container styling */
 .datagrid-container {
+    background-color: white;
     margin: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Style overrides for MUI DataGrid */
 .datagrid-container .MuiDataGrid-root {
     border: none;
+    font-size: 14px;  /* Increase font size for better readability */
 }
 
 .MuiDataGrid-columnHeaders {
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #4CAF50;
+    color: #fff;
     font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .MuiDataGrid-cell {
-    color: #666;
+    color: #333;
     border-color: #e0e0e0;
 }
 
@@ -45,15 +65,13 @@
 }
 
 .MuiDataGrid-row:hover {
-    background-color: #f9f9fb;
+    background-color: #f1f1f1;
 }
 
-/* Custom styling for the cells to improve readability */
 .MuiDataGrid-cellContent {
     padding: 8px;
 }
 
-/* Adjustments for the loading and error messages */
 .loading-error-container {
     padding: 20px;
     text-align: center;
@@ -62,10 +80,56 @@
 }
 
 .MuiDataGrid-cell {
-    height: auto !important; /* Override to ensure height is dynamic */
-    white-space: normal !important; /* Allow text wrapping */
+    height: auto !important;
+    white-space: normal !important;
 }
 
 .MuiDataGrid-row {
-    min-height: 1000px; /* Set a minimum height but allow expansion */
+    min-height: 100px;
+}
+
+.MuiDataGrid-cell img {
+    border-radius: 4px; /* Rounded corners for the images */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for the images */
+}
+
+.MuiDataGrid-columnHeaders, .MuiDataGrid-footerContainer {
+
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase; /* Make header text uppercase */
+}
+
+.MuiDataGrid-toolbarContainer {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border-bottom: 1px solid #ccc;
+}
+
+.MuiDataGrid-footerContainer {
+    border-top: 1px solid #ccc;
+}
+
+.MuiDataGrid-toolbarContainer button {
+    background-color: #2e7d32;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.MuiDataGrid-toolbarContainer button:hover {
+    background-color: #1b5e20;
+}
+
+.MuiDataGrid-cell--withRenderer {
+    display: flex;
+    align-items: center;
+}
+
+.css-t89xny-MuiDataGrid-columnHeaderTitle{
+    color: darkgray;
 }
