@@ -1,5 +1,24 @@
-body{
+/*////////////////////////////////////////////////////////////////////////
+Table of Contents:
+    1. Global Styles
+    2. Form Containers
+        2.1 Loginboxframe
+        2.2 Loginframe
+        2.3 Emailframe, Passwordframe, LoginButton, RegisterToggle
+    3. Frame3
+    4. Inputs
+    5. Pokemon Logo
+    6. Error Messages
+    7. Form Visibility
+    8. Button Styles
+    9. Media Queries
+////////////////////////////////////////////////////////////////////////*/
+
+/* 1. Global Styles */
+body {
     background-color: white;
+    margin: 0;
+    padding: 0;
 }
 
 * {
@@ -7,6 +26,8 @@ body{
     box-sizing: border-box; /* Helps manage padding and borders */
 }
 
+/* 2. Form Containers */
+/* 2.1 Loginboxframe */
 .Loginboxframe {
     margin-top: 15px;
     display: flex;
@@ -15,6 +36,7 @@ body{
     width: 100%; /* Full width to support responsiveness */
 }
 
+/* 2.2 Loginframe */
 .Loginframe {
     display: flex;
     justify-content: center;
@@ -24,6 +46,7 @@ body{
     position: relative;
 }
 
+/* 2.3 Emailframe, Passwordframe, LoginButton, RegisterToggle */
 .Emailframe,
 .Passwordframe,
 .LoginButton,
@@ -33,6 +56,7 @@ body{
     justify-content: center;
 }
 
+/* 3. Frame3 */
 .Frame3 {
     background: #D9D9D9;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -47,6 +71,7 @@ body{
     top: 0;
 }
 
+/* 4. Inputs */
 input#email, input#password, #confirmPassword {
     height: 50px;
     text-align: center;
@@ -59,6 +84,7 @@ input#email, input#password, #confirmPassword {
     outline: none;
 }
 
+/* 5. Pokemon Logo */
 .PokemonLogoBox {
     display: flex;
     margin: auto;
@@ -74,6 +100,7 @@ input#email, input#password, #confirmPassword {
     max-width: 700px;
 }
 
+/* 6. Error Messages */
 .password-error,
 .server-message {
     font-size: 0.8em;
@@ -82,6 +109,7 @@ input#email, input#password, #confirmPassword {
     width: 100%; /* Use full width for error messages */
 }
 
+/* 7. Form Visibility */
 .hiddenForm {
     transform: translateX(-100%); /* Slide out */
     opacity: 0;
@@ -92,6 +120,7 @@ input#email, input#password, #confirmPassword {
     opacity: 1;
 }
 
+/* 8. Button Styles */
 .LogInErrorContainer,
 .RegisterErrorContainer {
     display: flex;
@@ -112,10 +141,11 @@ input#email, input#password, #confirmPassword {
     cursor: pointer;
 }
 
-.LoginButton button{
+.LoginButton button {
     margin-top: 10px;
 }
 
+/* 9. Media Queries */
 @media (max-width: 768px) {
     .Loginframe {
         max-width: none; /* Allow flexibility on smaller screens */

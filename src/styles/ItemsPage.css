@@ -1,3 +1,19 @@
+/*////////////////////////////////////////////////////////////////////////
+Table of Contents:
+    1. Global Styles
+    2. Containers
+        2.1 General Container
+        2.2 Main Container
+        2.3 Outer Container
+    3. DataGrid
+        3.1 DataGrid Container
+        3.2 DataGrid Cell
+        3.3 DataGrid Row
+        3.4 DataGrid Headers
+        3.5 DataGrid Toolbar
+////////////////////////////////////////////////////////////////////////*/
+
+/* 1. Global Styles */
 body {
     background-color: #D9D9D9;
     margin: 0;
@@ -5,11 +21,14 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* 2. Containers */
+/* 2.1 General Container */
 .general-container {
     background-color: #D9D9D9;
     padding-top: 15px;
 }
 
+/* 2.2 Main Container */
 .main-container {
     display: flex;
     flex-direction: column;
@@ -24,15 +43,18 @@ body {
     border-radius: 12px;
 }
 
+/* 2.3 Outer Container */
 .outer-container {
     background-color: #D9D9D9;
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    width: 100%; /* Ensure it takes the full width of the parent */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+/* 3. DataGrid */
+/* 3.1 DataGrid Container */
 .datagrid-container {
     background-color: white;
     margin: 20px;
@@ -44,9 +66,10 @@ body {
 
 .datagrid-container .MuiDataGrid-root {
     border: none;
-    font-size: 14px;  /* Increase font size for better readability */
+    font-size: 14px;
 }
 
+/* 3.2 DataGrid Headers */
 .MuiDataGrid-columnHeaders {
     background-color: #4CAF50;
     color: #fff;
@@ -55,60 +78,53 @@ body {
     text-transform: uppercase;
 }
 
+.MuiDataGrid-columnHeaders, .MuiDataGrid-footerContainer {
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* 3.3 DataGrid Cell */
 .MuiDataGrid-cell {
     color: #333;
     border-color: #e0e0e0;
+    height: auto !important;
+    white-space: normal !important;
 }
 
 .MuiDataGrid-cell:focus-within {
     outline: none;
 }
 
-.MuiDataGrid-row:hover {
-    background-color: #f1f1f1;
-}
-
 .MuiDataGrid-cellContent {
     padding: 8px;
 }
 
-.loading-error-container {
-    padding: 20px;
-    text-align: center;
-    font-size: 18px;
-    color: #ff6b6b;
+.MuiDataGrid-cell img {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.MuiDataGrid-cell {
-    height: auto !important;
-    white-space: normal !important;
+.MuiDataGrid-cell--withRenderer {
+    display: flex;
+    align-items: center;
 }
 
+/* 3.4 DataGrid Row */
 .MuiDataGrid-row {
     min-height: 100px;
 }
 
-.MuiDataGrid-cell img {
-    border-radius: 4px; /* Rounded corners for the images */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for the images */
+.MuiDataGrid-row:hover {
+    background-color: #f1f1f1;
 }
 
-.MuiDataGrid-columnHeaders, .MuiDataGrid-footerContainer {
-
-    color: #ffffff;
-    font-weight: bold;
-    text-transform: uppercase; /* Make header text uppercase */
-}
-
+/* 3.5 DataGrid Toolbar */
 .MuiDataGrid-toolbarContainer {
     padding: 10px;
     background-color: #4CAF50;
     color: white;
     border-bottom: 1px solid #ccc;
-}
-
-.MuiDataGrid-footerContainer {
-    border-top: 1px solid #ccc;
 }
 
 .MuiDataGrid-toolbarContainer button {
@@ -125,11 +141,13 @@ body {
     background-color: #1b5e20;
 }
 
-.MuiDataGrid-cell--withRenderer {
-    display: flex;
-    align-items: center;
+.loading-error-container {
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #ff6b6b;
 }
 
-.css-t89xny-MuiDataGrid-columnHeaderTitle{
+.css-t89xny-MuiDataGrid-columnHeaderTitle {
     color: darkgray;
 }

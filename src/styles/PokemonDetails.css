@@ -1,7 +1,30 @@
+/*////////////////////////////////////////////////////////////////////////
+Table of Contents:
+    1. Global Styles
+    2. Typography
+    3. Containers
+        3.1 Parent Container
+        3.2 Pokemon Details Container
+    4. Pokemon Info Card
+    5. Image Styling
+    6. Unordered List Styling
+    7. Measurements
+    8. Navigation Button Styling
+    9. Responsive Adjustments
+    10. Statistics Section
+////////////////////////////////////////////////////////////////////////*/
+
+/* 1. Global Styles */
 body {
     background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
-/* General styles for paragraphs and headings */
+
+/* 2. Typography */
 p {
     margin: 5px;
     font-family: 'Arial', sans-serif;
@@ -11,37 +34,20 @@ p {
 h1 {
     margin-top: 2px;
     margin-bottom: 2px;
-    font-family: 'Pokemon', sans-serif; /* Consider using a themed font */
+    font-family: 'Pokemon', sans-serif;
     color: #333;
     text-transform: capitalize;
 }
 
 h2 {
     margin: 0px;
-    font-family: 'Pokemon', sans-serif; /* Consider using a themed font */
+    font-family: 'Pokemon', sans-serif;
     color: #555;
     font-size: 25px !important;
 }
 
-/* Flex container for details sections */
-.details-flex-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap; /* Make responsive by wrapping children */
-    gap: 10px; /* Add gap between children */
-}
-
-/* Styling individual details sections */
-.details-section {
-    flex: 1;
-    margin: 10px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Ensure the body and HTML elements have the same background */
+/* 3. Containers */
+/* 3.1 Parent Container */
 html, body {
     margin: 0;
     padding: 0;
@@ -50,32 +56,25 @@ html, body {
     flex-direction: column;
 }
 
-/* Ensure the parent container uses flex and fills the height */
-body > .parent-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Container for the Pokémon details */
+/* 3.2 Pokemon Details Container */
 .pokemon-details-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     padding: 20px;
-    background: #D9D9D9; /* Background color specific to this container */
-    min-height: 100vh; /* Ensure the container covers at least 70% of the viewport height */
+    background: #D9D9D9;
+    min-height: 100vh;
     width: 100%;
     box-sizing: border-box;
-    flex-grow: 1; /* Ensure it grows to fill the remaining space */
+    flex-grow: 1;
 }
 
-/* Main card for Pokémon information */
+/* 4. Pokemon Info Card */
 .pokemon-info {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Ensure the statistics section stays at the bottom */
+    justify-content: space-between;
     border: 2px solid #ccc;
     padding: 20px;
     border-radius: 10px;
@@ -87,97 +86,93 @@ body > .parent-container {
     position: relative;
     margin-bottom: 20px;
     box-sizing: border-box;
-    flex: 1 1 auto; /* Allow to grow and shrink */
-    min-width: 300px; /* Minimum width it can shrink to */
+    flex: 1 1 auto;
+    min-width: 300px;
     max-height: 800px;
 }
 
-/* Container for the Pokémon image */
+/* 5. Image Styling */
 .pokemon-image-container {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    flex: 1 1 auto; /* Allow to grow and shrink */
-    min-width: 200px; /* Minimum width it can shrink to */
+    flex: 1 1 auto;
+    min-width: 200px;
 }
 
-/* Styling for the Pokémon image */
 .pokemon-image {
     width: 100%;
     max-width: 260px;
     height: auto;
     max-height: 260px;
     margin-bottom: 10px;
-    flex: 1 1 auto; /* Allow to grow and shrink */
-    min-width: 150px; /* Minimum width it can shrink to */
+    flex: 1 1 auto;
+    min-width: 150px;
 }
 
-/* Unordered list styling inside the Pokémon info card */
+/* 6. Unordered List Styling */
 .pokemon-info ul {
-    padding-left: 0; /* Remove default padding */
+    padding-left: 0;
     overflow: hidden;
     word-wrap: break-word;
-    list-style: none; /* Remove default list style/bullet points */
-    margin: 0; /* Remove default margins to align with the container edges */
+    list-style: none;
+    margin: 0;
 }
 
-/* List item styling inside the Pokémon info card */
 .pokemon-info li {
-    padding: 5px 0; /* Add padding for better readability */
-    word-wrap: break-word; /* Ensure long words do not overflow */
+    padding: 5px 0;
+    word-wrap: break-word;
     font-family: 'Arial', sans-serif;
     color: #333;
 }
 
-/* Flex container for measurement icons */
+/* 7. Measurements */
 .Measurements {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px; /* Add gap between measurement items */
-    justify-content: center; /* Center items horizontally */
+    gap: 10px;
+    justify-content: center;
 }
 
-/* Styling for icons with measurement class */
 .measurement {
     padding: 5px;
-    color: black; /* Icon color, adjust as needed */
-    display: flex; /* Ensure measurement divs are flex items */
-    align-items: center; /* Center items vertically */
-    gap: 5px; /* Add space between icon and text */
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .measurement svg {
-    color: gray; /* Icon color, adjust as needed */
-    font-size: 20px; /* You can also adjust the size here if necessary */
+    color: gray;
+    font-size: 20px;
 }
 
-/* Back button styling */
+/* 8. Navigation Button Styling */
 .back-button {
     position: absolute;
-    top: 10px; /* Adjust these values as needed */
+    top: 10px;
     left: 10px;
     font-size: 30px;
     color: #333;
     background: none;
     border: none;
     cursor: pointer;
-    z-index: 1000; /* Ensure it is above other elements */
+    z-index: 1000;
 }
 
-/* Navigation button styling */
 .pokemon-image-container .nav-button {
     background: none;
     border: none;
-    color: #666; /* Icon color, adjust as needed */
+    color: #666;
     cursor: pointer;
-    top: 50%; /* Center vertically */
-    font-size: 24px; /* Icon size, adjust as needed */
-    padding: 20px; /* Sufficient padding for clickable area */
-    z-index: 10; /* Ensure it's above other elements if needed */
+    top: 50%;
+    font-size: 24px;
+    padding: 20px;
+    z-index: 10;
 }
 
-/* Responsive adjustments */
+/* 9. Responsive Adjustments */
 @media (max-width: 600px) {
     .pokemon-info {
         width: 95%;
@@ -190,7 +185,7 @@ body > .parent-container {
     }
 
     .details-flex-container {
-        flex-direction: column; /* Stack sections vertically */
+        flex-direction: column;
     }
 
     .back-button {
@@ -202,7 +197,7 @@ body > .parent-container {
     }
 }
 
-/* Styling for the statistics section */
+/* 10. Statistics Section */
 .statistics-section {
     margin-top: 20px;
     width: 100%;
@@ -211,7 +206,7 @@ body > .parent-container {
 .statistics-bars {
     display: flex;
     justify-content: space-around;
-    height: 150px; /* Adjust as needed */
+    height: 150px;
 }
 
 .stat-bar {
@@ -224,7 +219,7 @@ body > .parent-container {
 
 .stat-name {
     font-size: 14px;
-    margin-top: 5px; /* Adjust this margin as needed */
+    margin-top: 5px;
     text-align: center;
     height: 50px;
 }

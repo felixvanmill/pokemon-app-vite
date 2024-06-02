@@ -1,3 +1,18 @@
+/*////////////////////////////////////////////////////////////////////////
+Table of Contents:
+    1. Global Styles
+    2. Containers
+        2.1 General Container
+        2.2 Main Container
+        2.3 Search Container
+        2.4 Pokemon Containers
+    3. Search Results
+    4. Pokemon Items
+    5. Notes Section
+    6. Buttons
+////////////////////////////////////////////////////////////////////////*/
+
+/* 1. Global Styles */
 body {
     background-color: #D9D9D9;
     margin: 0;
@@ -5,11 +20,14 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* 2. Containers */
+/* 2.1 General Container */
 .general-container {
     background-color: #D9D9D9;
     padding-top: 15px;
 }
 
+/* 2.2 Main Container */
 .main-container {
     display: flex;
     flex-direction: column;
@@ -24,6 +42,7 @@ body {
     border-radius: 12px;
 }
 
+/* 2.3 Search Container */
 .search-container, .caught-pokemon-container, .not-caught-pokemon-container, .notes-container {
     width: 100%;
     margin-bottom: 20px;
@@ -39,6 +58,21 @@ h2, h3 {
     color: #333;
 }
 
+/* 2.4 Pokemon Containers */
+.caught-pokemon-container, .not-caught-pokemon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.caught-pokemon-list, .not-caught-pokemon-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* 3. Search Results */
 .search-container input {
     padding: 12px;
     margin-bottom: 10px;
@@ -81,36 +115,7 @@ h2, h3 {
     flex-grow: 1;
 }
 
-.search-results button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    align-self: flex-end;
-    transition: background-color 0.3s;
-}
-
-.search-results button:hover {
-    background-color: #218838;
-}
-
-.caught-pokemon-container, .not-caught-pokemon-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.caught-pokemon-list, .not-caught-pokemon-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
+/* 4. Pokemon Items */
 .pokemon-item {
     margin: 5px;
     display: flex;
@@ -175,6 +180,7 @@ h2, h3 {
     background-color: #0056b3;
 }
 
+/* 5. Notes Section */
 .notes-container {
     display: flex;
     flex-direction: column;
@@ -190,7 +196,7 @@ h2, h3 {
     border-radius: 6px;
     padding: 10px;
     position: relative;
-    padding-top: 20px; /* Adjust padding to make room for the title */
+    padding-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -198,16 +204,16 @@ h2, h3 {
 
 .notes-fieldset legend {
     margin: 0;
-    padding: 0 5px; /* Reduce padding to minimize whitespace */
+    padding: 0 5px;
     background: #fff;
     font-weight: bold;
     position: absolute;
-    top: -10px; /* Adjust this value to place the title correctly */
+    top: -10px;
     font-size: 16px;
     color: #333;
     text-align: center;
-    white-space: nowrap; /* Ensure the legend doesn't wrap to a new line */
-    width: auto; /* Ensure the width only takes as much space as the text */
+    white-space: nowrap;
+    width: auto;
 }
 
 .notes-container textarea {
@@ -218,13 +224,14 @@ h2, h3 {
     resize: vertical;
     box-sizing: border-box;
     border-radius: 6px;
-    outline: none; /* Remove outline when focused */
+    outline: none;
 }
 
 .notes-container textarea:focus {
-    border: none; /* Remove border when focused */
+    border: none;
 }
 
+/* 6. Buttons */
 button {
     padding: 10px 20px;
     margin-top: 20px;
