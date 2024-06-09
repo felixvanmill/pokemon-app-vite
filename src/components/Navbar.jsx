@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 import '../styles/NavBar.css';
 
 const Navbar = () => {
-    const { userEmail, isAuthenticated, logout } = useAuth();
+    const { currentUser, isAuthenticated, logout } = useAuth();
     const [isSidebarOpen, setSidebarOpen] = useState(false);
     const [accountDropdown, setAccountDropdown] = useState(false);
     const navigate = useNavigate();
@@ -36,7 +36,7 @@ const Navbar = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, [isSidebarOpen]); // Dependencies array ensures effect runs only when isSidebarOpen changes
 
-    const accountLabel = isAuthenticated ? `Account (${userEmail})` : "Login";
+    const accountLabel = isAuthenticated ? `Account (${currentUser?.email})` : "Login";
 
     return (
         <div className="Navbar">
