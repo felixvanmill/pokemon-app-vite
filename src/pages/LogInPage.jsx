@@ -73,15 +73,33 @@ function LogInPage() {
 
                 if (response.ok) {
                     setRegisterMessage("Registration successful!");
-                    login(email);
-                    navigate('/');
+                    const authResponse = await fetch(`${API_BASE_URL}/users/authenticate`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Api-Key': API_KEY,
+                        },
+                        body: JSON.stringify({ username: email, password: password }),
+                    });
+                    if (authResponse.ok) {
+                        const data = await authResponse.json();
+                        // console.log("Auth response data:", data); // Debugging
+                        login(email, data.jwt); // Ensure token is stored
+                        navigate('/');
+                    } else {
+                        const errorData = await authResponse.json();
+                        console.error("Auth error response:", errorData); // Debugging
+                        setRegisterError("Failed to authenticate after registration.");
+                    }
                 } else if (response.status === 409) {
                     setRegisterError("User already exists.");
                 } else {
                     const errorData = await response.json();
+                    console.error("Register error response:", errorData); // Debugging
                     setRegisterError(`Registration failed: ${errorData.message || 'Unknown error'}.`);
                 }
             } catch (error) {
+                console.error("Registration error:", error); // Debugging
                 setRegisterError("An error occurred during registration.");
             }
 
@@ -104,17 +122,19 @@ function LogInPage() {
 
                 if (response.ok) {
                     const data = await response.json();
+                    // console.log("Auth response data:", data); // Debugging
                     setLoginMessage("Login successful!");
-                    login(email);
+                    login(email, data.jwt); // Ensure token is stored
                     navigate('/');
-                    console.log("JWT Token:", data.token);
                 } else if (response.status === 401) {
                     setLoginError("Invalid password.");
                 } else {
                     const errorData = await response.json();
+                    console.error("Login error response:", errorData); // Debugging
                     setLoginError(`Login failed: ${errorData.message || 'Unknown error'}.`);
                 }
             } catch (error) {
+                console.error("Login error:", error); // Debugging
                 setLoginError("An error occurred during login.");
             }
         }
@@ -148,38 +168,38 @@ function LogInPage() {
                 <div style={{ width: "200%", position: "relative" }}>
                     <form onSubmit={handleSubmit} className={`Frame3 ${isRegistering ? 'hiddenForm' : 'visibleForm'}`}>
                         <div className="Emailframe">
-                            <input type="email" id="email" name="email" value={email}
+                            <input type="email" id="email-login" name="email" value={email}
                                    onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required/>
                         </div>
                         <div className="Passwordframe">
-                            <input type="password" id="password" name="password" value={password}
+                            <input type="password" id="password-login" name="password" value={password}
                                    onChange={handlePasswordChange} placeholder="Enter your password" required/>
                         </div>
                         <div className="LogInErrorContainer">
                             {loginError && <p className="server-message error">{loginError}</p>}
                             {loginMessage && <p className="server-message">{loginMessage}</p>}
                         </div>
-                            <div className="LoginButton">
-                                <button type="submit">Login</button>
-                            </div>
-                            <div className="RegisterToggle">
-                                <button type="button" onClick={toggleForm}>
-                                    New here? Register!
-                                </button>
-                            </div>
+                        <div className="LoginButton">
+                            <button type="submit">Login</button>
+                        </div>
+                        <div className="RegisterToggle">
+                            <button type="button" onClick={toggleForm}>
+                                New here? Register!
+                            </button>
+                        </div>
                     </form>
 
                     <form onSubmit={handleSubmit} className={`Frame3 ${isRegistering ? 'visibleForm' : 'hiddenForm'}`}>
                         <div className="Emailframe">
-                            <input type="email" id="email" name="email" value={email}
+                            <input type="email" id="email-register" name="email" value={email}
                                    onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required/>
                         </div>
                         <div className="Passwordframe">
-                            <input type="password" id="password" name="password" value={password}
+                            <input type="password" id="password-register" name="password" value={password}
                                    onChange={handlePasswordChange} placeholder="Enter your password" required/>
                         </div>
                         <div className="Passwordframe">
-                            <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword}
+                            <input type="password" id="confirmPassword-register" name="confirmPassword" value={confirmPassword}
                                    onChange={handleConfirmPasswordChange} placeholder="Confirm your password" required/>
                         </div>
                         <div className="RegisterErrorContainer">
@@ -187,14 +207,14 @@ function LogInPage() {
                             {registerError && <p className="server-message error">{registerError}</p>}
                             {registerMessage && <p className="server-message">{registerMessage}</p>}
                         </div>
-                            <div className="LoginButton">
-                                <button type="submit">Register</button>
-                            </div>
-                            <div className="RegisterToggle">
-                                <button type="button" onClick={toggleForm}>
-                                    Go to Login
-                                </button>
-                            </div>
+                        <div className="LoginButton">
+                            <button type="submit">Register</button>
+                        </div>
+                        <div className="RegisterToggle">
+                            <button type="button" onClick={toggleForm}>
+                                Go to Login
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -72,7 +72,7 @@ body {
 }
 
 /* 4. Inputs */
-input#email, input#password, #confirmPassword {
+input#email-login, input#password-login, #confirmPassword {
     height: 50px;
     text-align: center;
     width: 100%; /* Full width for responsiveness */
@@ -152,7 +152,7 @@ input#email, input#password, #confirmPassword {
         width: 90%;
     }
 
-    input#email, input#password, #confirmPassword {
+    input#email-login, input#password-login, #confirmPassword {
         font-size: 14px; /* Smaller font size for smaller screens */
     }
 }

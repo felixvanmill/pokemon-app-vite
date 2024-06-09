@@ -4,21 +4,30 @@ import React, { createContext, useContext, useState } from 'react';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const [userEmail, setUserEmail] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [token, setToken] = useState(null);
 
-    const login = (email) => {
-        setUserEmail(email);
+    const login = (email, token) => {
+        setCurrentUser({ email });
+        setToken(token);
         setIsAuthenticated(true);
+        // Remove or comment out the console log in production
+        // console.log("JWT Token set:", token); // Debugging token set
     };
 
     const logout = () => {
-        setUserEmail(null);
+        setCurrentUser(null);
+        setToken(null);
         setIsAuthenticated(false);
     };
 
+    const updateUser = (newInfo) => {
+        setCurrentUser((prevUser) => ({ ...prevUser, ...newInfo }));
+    };
+
     return (
-        <AuthContext.Provider value={{ userEmail, isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ currentUser, isAuthenticated, token, login, logout, updateUser }}>
             {children}
         </AuthContext.Provider>
     );
