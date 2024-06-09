@@ -15,15 +15,15 @@ Table of Contents:
 ////////////////////////////////////////////////////////////////////////*/
 
 /* 1. Global Styles */
-body {
-    background-color: white;
-    margin: 0;
-    padding: 0;
+:local {
+    body {
+        background-color: white;
+    }
 }
 
 * {
     font-family: 'Jost', sans-serif;
-    box-sizing: border-box; /* Helps manage padding and borders */
+    box-sizing: border-box;
 }
 
 /* 2. Form Containers */
@@ -33,16 +33,17 @@ body {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-    width: 100%; /* Full width to support responsiveness */
+    width: 100%;
+    background-color: white;
 }
 
 /* 2.2 Loginframe */
 .Loginframe {
     display: flex;
     justify-content: center;
-    width: 100%; /* Dynamic width for responsiveness */
-    max-width: 550px; /* Max width set for larger screens */
-    margin: auto; /* Centering the frame */
+    width: 100%;
+    max-width: 550px;
+    margin: auto;
     position: relative;
 }
 
@@ -52,7 +53,7 @@ body {
 .LoginButton,
 .RegisterToggle {
     display: flex;
-    width: 90%; /* Maintaining width to be responsive */
+    width: 90%;
     justify-content: center;
 }
 
@@ -75,7 +76,7 @@ body {
 input#email, input#password, #confirmPassword {
     height: 50px;
     text-align: center;
-    width: 100%; /* Full width for responsiveness */
+    width: 100%;
     margin-top: 10px;
     font-size: 16px;
     border-radius: 30px;
@@ -90,13 +91,14 @@ input#email, input#password, #confirmPassword {
     margin: auto;
     justify-content: center;
     align-items: center;
-    width: 100%; /* Full width to support layout */
+    width: 100%; /
+    background-color: white;
 }
 
 .PokemonLogo {
-    width: 70%; /* Default relative width */
-    height: auto; /* Maintains aspect ratio */
-    transition: width 0.5s ease-in-out; /* Smooth transition for width changes */
+    width: 70%;
+    height: auto;
+    transition: width 0.5s ease-in-out;
     max-width: 700px;
 }
 
@@ -106,7 +108,7 @@ input#email, input#password, #confirmPassword {
     font-size: 0.8em;
     margin-top: 5px;
     text-align: center;
-    width: 100%; /* Use full width for error messages */
+    width: 100%;
 }
 
 /* 7. Form Visibility */
@@ -148,21 +150,21 @@ input#email, input#password, #confirmPassword {
 /* 9. Media Queries */
 @media (max-width: 768px) {
     .Loginframe {
-        max-width: none; /* Allow flexibility on smaller screens */
+        max-width: none;
         width: 90%;
     }
 
     input#email, input#password, #confirmPassword {
-        font-size: 14px; /* Smaller font size for smaller screens */
+        font-size: 14px;
     }
 }
 
 @media (max-width: 480px) {
     .Frame3 {
-        border-radius: 30px; /* Smaller radius for smaller screens */
+        border-radius: 30px;
     }
 
     .LoginButton button, .RegisterToggle button {
-        font-size: 18px; /* Smaller buttons on smaller screens */
+        font-size: 18px;
     }
 }
