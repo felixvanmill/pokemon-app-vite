@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
-import '../styles/NavBar.css';
+import '../styles/ComponentStyles/NavBar.css';
 
 const Navbar = () => {
     const { currentUser, isAuthenticated, logout } = useAuth();

@@ -1,18 +1,14 @@
 /*////////////////////////////////////////////////////////////////////////
 Table of Contents:
-    1. Global Styles
-    2. Containers
-        2.1 Pokemon Container
-    3. Cards
-        3.1 Pokemon Card
-        3.2 Pokemon Image
-    4. Search Container
+    1. Containers
+        1.1 Pokemon Container
+    2. Cards
+        2.1 Pokemon Card
+        2.2 Pokemon Image
 ////////////////////////////////////////////////////////////////////////*/
 
-/* 1. Global Styles */
-
-/* 2. Containers */
-/* 2.1 Pokemon Container */
+/* 1. Containers */
+/* 1.1 Pokemon Container */
 .pokemon-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(202px, 1fr));
@@ -23,8 +19,8 @@ Table of Contents:
     padding-right: 150px;
 }
 
-/* 3. Cards */
-/* 3.1 Pokemon Card */
+/* 2. Cards */
+/* 2.1 Pokemon Card */
 .pokemon-card {
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     text-align: center;
@@ -36,20 +32,11 @@ Table of Contents:
     align-items: center;
 }
 
-/* 3.2 Pokemon Image */
+/* 2.2 Pokemon Image */
 .pokemon-card img {
     width: 175px;
     height: 202px;
     object-fit: contain;
     display: block;
     margin: auto;
-}
-
-/* 4. Search Container */
-.search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: white;
 }

@@ -4,7 +4,7 @@ import BackButton from '../components/BackButton.jsx';
 import { fetchPokemonDetails } from '../services/fetchPokemons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faArrowsAltV, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
-import '../styles/PokemonDetails.css';
+import '../styles/PagesStyles/PokemonDetails.css';
 
 import useArrowKeyNavigation from '../hooks/useArrowKeyNavigation';
 

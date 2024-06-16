@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/NewsItem.css';
+import '../styles/ComponentStyles/NewsItem.css';
 
 function NewsItem({ image, title, description, date }) {
     return (

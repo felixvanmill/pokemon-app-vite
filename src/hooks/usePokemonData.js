@@ -15,7 +15,7 @@ const usePokemonData = () => {
                 setError(null);
             } catch (err) {
                 setError('Failed to fetch pokemons');
-                setPokemons([]);  // It's a good practice to clear any old state in case of error.
+                setPokemons([]);
             } finally {
                 setLoading(false);
             }

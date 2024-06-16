@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import '../styles/MyPokemonPage.css';
-import { fetchPokemonDetails, fetchNotCaughtPokemons } from '../services/api';
+import '../styles/PagesStyles/MyPokemonPage.css';
+import { fetchPokemonDetails, fetchNotCaughtPokemons } from '../services/fetchPokemons.js';
 import DropArea from '../components/DropArea';
 import PokemonItem from '../components/PokemonItem.jsx';
 

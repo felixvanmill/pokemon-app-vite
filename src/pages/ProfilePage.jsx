@@ -1,6 +1,6 @@
 // src/pages/ProfilePage.jsx
 import React, { useState, useEffect } from 'react';
-import '../styles/ProfilePage.css';
+import '../styles/PagesStyles/ProfilePage.css';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
 

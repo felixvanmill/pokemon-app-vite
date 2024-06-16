@@ -1,0 +1,16 @@
+/*////////////////////////////////////////////////////////////////////////
+Table of Contents:
+    1. Global Styles
+    2. Search Container
+////////////////////////////////////////////////////////////////////////*/
+
+/* 1. Global Styles */
+
+/* 2. Search Container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+}

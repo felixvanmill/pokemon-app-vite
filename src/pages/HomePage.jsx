@@ -1,6 +1,6 @@
 import React from 'react';
 import NewsItem from '../components/NewsItem.jsx';
-import '../styles/HomePage.css';
+import '../styles/PagesStyles/HomePage.css';
 
 function HomePage() {
     const newsItems = [

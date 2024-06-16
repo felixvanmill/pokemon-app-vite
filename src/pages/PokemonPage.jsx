@@ -1,8 +1,9 @@
+// src/pages/PokemonPage.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import usePokemonData from '../hooks/usePokemonData';
-import '../App.css';  // Ensure this import is correct
-import '../styles/PokemonPage.css'
+import PokemonContainer from '../components/PokemonContainer';
+import '../App.css';
+import '../styles/PagesStyles/PokemonPage.css';
 
 function PokemonPage() {
     const { pokemons, loading, error } = usePokemonData();
@@ -26,16 +27,7 @@ function PokemonPage() {
                     style={{ padding: '10px', width: '300px' }}
                 />
             </div>
-            <div className="pokemon-container">
-                {filteredPokemons.map(pokemon => (
-                    <div className="pokemon-card" key={pokemon.id}>
-                        <h3>{pokemon.name} (#{pokemon.id})</h3>
-                        <Link to={`/pokemon/${pokemon.id}`}>
-                            <img src={pokemon.image} alt={pokemon.name} />
-                        </Link>
-                    </div>
-                ))}
-            </div>
+            <PokemonContainer pokemons={filteredPokemons} />
         </div>
     );
 }
