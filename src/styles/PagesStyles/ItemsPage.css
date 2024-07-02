@@ -5,12 +5,14 @@ Table of Contents:
         2.1 General Container
         2.2 Main Container
         2.3 Outer Container
-    3. DataGrid
-        3.1 DataGrid Container
-        3.2 DataGrid Cell
-        3.3 DataGrid Row
-        3.4 DataGrid Headers
-        3.5 DataGrid Toolbar
+    3. Table Styles
+        3.1 Table Container
+        3.2 Table Header
+        3.3 Table Row
+    4. Filter Panel
+        4.1 Filter Panel Container
+        4.2 Filter Panel Filters
+    5. Pagination
 ////////////////////////////////////////////////////////////////////////*/
 
 /* 1. Global Styles */
@@ -18,6 +20,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    background-color: #D9D9D9;
 }
 
 /* 2. Containers */
@@ -44,109 +47,113 @@ body {
 
 /* 2.3 Outer Container */
 .outer-container {
-    background-color: #D9D9D9;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    justify-content: center; /* Center content horizontally */
+    align-items: flex-start; /* Align items at the top */
+    background-color: #D9D9D9;
+    padding: 20px;
     box-sizing: border-box;
+    gap: 20px;
+    width: 100%;
 }
 
-/* 3. DataGrid */
-/* 3.1 DataGrid Container */
-.datagrid-container {
+/* 3. Table Styles */
+/* 3.1 Table Container */
+.table-container {
+    flex: 1;
     background-color: white;
-    margin: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
 }
 
-.datagrid-container .MuiDataGrid-root {
-    border: none;
-    font-size: 14px;
+/* 3.2 Table Header */
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-/* 3.2 DataGrid Headers */
-.MuiDataGrid-columnHeaders {
+th {
     background-color: #4CAF50;
-    color: #fff;
+    color: white;
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
+    padding: 10px;
+    cursor: pointer;
 }
 
-.MuiDataGrid-columnHeaders, .MuiDataGrid-footerContainer {
-    color: #ffffff;
-    font-weight: bold;
-    text-transform: uppercase;
+/* 3.3 Table Row */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
 }
 
-/* 3.3 DataGrid Cell */
-.MuiDataGrid-cell {
-    color: #333;
-    border-color: #e0e0e0;
-    height: auto !important;
-    white-space: normal !important;
+tr:hover {
+    background-color: #f1f1f1;
 }
 
-.MuiDataGrid-cell:focus-within {
-    outline: none;
-}
-
-.MuiDataGrid-cellContent {
-    padding: 8px;
-}
-
-.MuiDataGrid-cell img {
+td img {
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.MuiDataGrid-cell--withRenderer {
+/* 4. Filter Panel */
+/* 4.1 Filter Panel Container */
+.filter-panel {
+    width: 250px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* 4.2 Filter Panel Filters */
+.filter-panel div {
+    margin-bottom: 15px;
+}
+
+.filter-panel label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.filter-panel input,
+.filter-panel select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* 5. Pagination */
+.pagination {
     display: flex;
+    justify-content: center;
     align-items: center;
-}
-
-/* 3.4 DataGrid Row */
-.MuiDataGrid-row {
-    min-height: 100px;
-}
-
-.MuiDataGrid-row:hover {
-    background-color: #f1f1f1;
-}
-
-/* 3.5 DataGrid Toolbar */
-.MuiDataGrid-toolbarContainer {
     padding: 10px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    margin: 0 5px;
     background-color: #4CAF50;
     color: white;
-    border-bottom: 1px solid #ccc;
-}
-
-.MuiDataGrid-toolbarContainer button {
-    background-color: #2e7d32;
-    color: white;
-    border-radius: 5px;
     border: none;
-    padding: 5px 10px;
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.MuiDataGrid-toolbarContainer button:hover {
-    background-color: #1b5e20;
+.pagination button:hover {
+    background-color: #45a049;
 }
 
-.loading-error-container {
-    padding: 20px;
-    text-align: center;
-    font-size: 18px;
-    color: #ff6b6b;
-}
-
-.css-t89xny-MuiDataGrid-columnHeaderTitle {
-    color: darkgray;
+.pagination span {
+    margin: 0 10px;
 }
