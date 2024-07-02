@@ -15,10 +15,8 @@ Table of Contents:
 ////////////////////////////////////////////////////////////////////////*/
 
 /* 1. Global Styles */
-:local {
-    body {
-        background-color: white;
-    }
+body{
+    background-color: white;
 }
 
 * {
@@ -73,7 +71,7 @@ Table of Contents:
 }
 
 /* 4. Inputs */
-input#email-login, input#password-login, #confirmPassword {
+input#email-login, input#password-login, #confirmPassword, input#email-register, input#password-register, input#confirmPassword-register {
     height: 50px;
     text-align: center;
     width: 100%;
