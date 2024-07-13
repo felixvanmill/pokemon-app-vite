@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../services/axiosInstance';
 import '../styles/PagesStyles/LoginPage.css';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
-
-const API_BASE_URL = 'https://api.datavortex.nl/pokemonapp';
-const API_KEY = 'pokemonapp:uHlwzGrkpZ45KU8J22aU';
 
 function LogInPage() {
     const [isRegistering, setIsRegistering] = useState(false);
@@ -73,12 +70,7 @@ function LogInPage() {
         };
 
         try {
-            const response = await axios.post(`${API_BASE_URL}/users`, requestBody, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Api-Key': API_KEY,
-                }
-            });
+            const response = await axiosInstance.post('/users', requestBody);
 
             if (response.status === 200) {
                 setRegisterMessage("Registration successful! Please log in with your new account.");
@@ -97,14 +89,9 @@ function LogInPage() {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post(`${API_BASE_URL}/users/authenticate`, {
+            const response = await axiosInstance.post('/users/authenticate', {
                 username: email,
                 password: password,
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Api-Key': API_KEY,
-                }
             });
 
             if (response.status === 200) {
@@ -218,19 +205,6 @@ function LogInPage() {
             </div>
         </div>
     );
-}
-
-async function authenticateUser(email, password) {
-    const response = await axios.post(`${API_BASE_URL}/users/authenticate`, {
-        username: email,
-        password: password,
-    }, {
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Api-Key': API_KEY,
-        }
-    });
-    return response;
 }
 
 export default LogInPage;

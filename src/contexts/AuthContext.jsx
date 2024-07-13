@@ -8,7 +8,6 @@ export function AuthProvider({ children }) {
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-        // Load token from localStorage when the component mounts
         const storedToken = localStorage.getItem('token');
         const storedUser = localStorage.getItem('user');
         if (storedToken && storedUser) {
@@ -22,7 +21,6 @@ export function AuthProvider({ children }) {
         setCurrentUser({ email });
         setToken(token);
         setIsAuthenticated(true);
-        // Store token and user in localStorage
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify({ email }));
     };
@@ -31,7 +29,6 @@ export function AuthProvider({ children }) {
         setCurrentUser(null);
         setToken(null);
         setIsAuthenticated(false);
-        // Remove token and user from localStorage
         localStorage.removeItem('token');
         localStorage.removeItem('user');
     };
