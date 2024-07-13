@@ -1,5 +1,5 @@
-// src/pages/LogInPage.jsx
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../styles/PagesStyles/LoginPage.css';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +17,7 @@ function LogInPage() {
     const [registerMessage, setRegisterMessage] = useState("");
     const [loginError, setLoginError] = useState("");
     const [loginMessage, setLoginMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ function LogInPage() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         setLoginMessage("");
         setLoginError("");
         setRegisterMessage("");
@@ -38,105 +40,94 @@ function LogInPage() {
             } else {
                 setLoginError("Invalid email format.");
             }
+            setIsLoading(false);
             return;
         }
 
         if (isRegistering) {
-            // Registration Logic
-            if (password.length < 8) {
-                setPasswordError("Password must be at least 8 characters long!");
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                setPasswordError("Passwords do not match!");
-                return;
-            }
-
-            const requestBody = {
-                username: email,
-                email: email,
-                password: password,
-                info: "",
-                authorities: [{ authority: "USER" }],
-            };
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/users`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Api-Key': API_KEY,
-                    },
-                    body: JSON.stringify(requestBody),
-                });
-
-                if (response.ok) {
-                    setRegisterMessage("Registration successful!");
-                    const authResponse = await fetch(`${API_BASE_URL}/users/authenticate`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Api-Key': API_KEY,
-                        },
-                        body: JSON.stringify({ username: email, password: password }),
-                    });
-                    if (authResponse.ok) {
-                        const data = await authResponse.json();
-                        // console.log("Auth response data:", data); // Debugging
-                        login(email, data.jwt); // Ensure token is stored
-                        navigate('/');
-                    } else {
-                        const errorData = await authResponse.json();
-                        console.error("Auth error response:", errorData); // Debugging
-                        setRegisterError("Failed to authenticate after registration.");
-                    }
-                } else if (response.status === 409) {
-                    setRegisterError("User already exists.");
-                } else {
-                    const errorData = await response.json();
-                    console.error("Register error response:", errorData); // Debugging
-                    setRegisterError(`Registration failed: ${errorData.message || 'Unknown error'}.`);
-                }
-            } catch (error) {
-                console.error("Registration error:", error); // Debugging
-                setRegisterError("An error occurred during registration.");
-            }
-
+            handleRegistration();
         } else {
-            // Login Logic
-            const requestBody = {
+            handleLogin();
+        }
+    };
+
+    const handleRegistration = async () => {
+        if (password.length < 8) {
+            setPasswordError("Password must be at least 8 characters long!");
+            setIsLoading(false);
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setPasswordError("Passwords do not match!");
+            setIsLoading(false);
+            return;
+        }
+
+        const requestBody = {
+            username: email,
+            email: email,
+            password: password,
+            info: "",
+            authorities: [{ authority: "USER" }],
+        };
+
+        try {
+            const response = await axios.post(`${API_BASE_URL}/users`, requestBody, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': API_KEY,
+                }
+            });
+
+            if (response.status === 200) {
+                setRegisterMessage("Registration successful! Please log in with your new account.");
+            } else if (response.status === 409) {
+                setRegisterError("User already exists.");
+            } else {
+                setRegisterError(`Registration failed: ${response.data.message || 'Unknown error'}.`);
+            }
+        } catch (error) {
+            console.error("Registration error:", error); // Debugging
+            setRegisterError("An error occurred during registration.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/users/authenticate`, {
                 username: email,
                 password: password,
-            };
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/users/authenticate`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Api-Key': API_KEY,
-                    },
-                    body: JSON.stringify(requestBody),
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    // console.log("Auth response data:", data); // Debugging
-                    setLoginMessage("Login successful!");
-                    login(email, data.jwt); // Ensure token is stored
-                    navigate('/');
-                } else if (response.status === 401) {
-                    setLoginError("Invalid password.");
-                } else {
-                    const errorData = await response.json();
-                    console.error("Login error response:", errorData); // Debugging
-                    setLoginError(`Login failed: ${errorData.message || 'Unknown error'}.`);
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': API_KEY,
                 }
-            } catch (error) {
-                console.error("Login error:", error); // Debugging
-                setLoginError("An error occurred during login.");
+            });
+
+            if (response.status === 200) {
+                const data = response.data;
+                setLoginMessage("Login successful! Redirecting to homepage...");
+                login(email, data.jwt); // Ensure token is stored
+
+                // Delay redirection to show success message
+                setTimeout(() => {
+                    navigate('/');
+                }, 2000); // 2 seconds delay
+            } else if (response.status === 401) {
+                setLoginError("Invalid email or password.");
+            } else if (response.status === 404) {
+                setLoginError("User not found. Please register first.");
+            } else {
+                setLoginError(`Login failed: ${response.data.message || 'Unknown error'}.`);
             }
+        } catch (error) {
+            console.error("Login error:", error); // Debugging
+            setLoginError("An error occurred during login.");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -152,6 +143,10 @@ function LogInPage() {
 
     const toggleForm = () => {
         setIsRegistering(!isRegistering);
+        resetForm();
+    };
+
+    const resetForm = () => {
         setEmail("");
         setPassword("");
         setConfirmPassword("");
@@ -169,18 +164,18 @@ function LogInPage() {
                     <form onSubmit={handleSubmit} className={`Frame3 ${isRegistering ? 'hiddenForm' : 'visibleForm'}`}>
                         <div className="Emailframe">
                             <input type="email" id="email-login" name="email" value={email}
-                                   onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required/>
+                                   onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
                         </div>
                         <div className="Passwordframe">
                             <input type="password" id="password-login" name="password" value={password}
-                                   onChange={handlePasswordChange} placeholder="Enter your password" required/>
+                                   onChange={handlePasswordChange} placeholder="Enter your password" required />
                         </div>
                         <div className="LogInErrorContainer">
                             {loginError && <p className="server-message error">{loginError}</p>}
                             {loginMessage && <p className="server-message">{loginMessage}</p>}
                         </div>
                         <div className="LoginButton">
-                            <button type="submit">Login</button>
+                            <button type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Login'}</button>
                         </div>
                         <div className="RegisterToggle">
                             <button type="button" onClick={toggleForm}>
@@ -192,15 +187,15 @@ function LogInPage() {
                     <form onSubmit={handleSubmit} className={`Frame3 ${isRegistering ? 'visibleForm' : 'hiddenForm'}`}>
                         <div className="Emailframe">
                             <input type="email" id="email-register" name="email" value={email}
-                                   onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required/>
+                                   onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
                         </div>
                         <div className="Passwordframe">
                             <input type="password" id="password-register" name="password" value={password}
-                                   onChange={handlePasswordChange} placeholder="Enter your password" required/>
+                                   onChange={handlePasswordChange} placeholder="Enter your password" required />
                         </div>
                         <div className="Passwordframe">
                             <input type="password" id="confirmPassword-register" name="confirmPassword" value={confirmPassword}
-                                   onChange={handleConfirmPasswordChange} placeholder="Confirm your password" required/>
+                                   onChange={handleConfirmPasswordChange} placeholder="Confirm your password" required />
                         </div>
                         <div className="RegisterErrorContainer">
                             {passwordError && <p className="password-error">{passwordError}</p>}
@@ -208,7 +203,7 @@ function LogInPage() {
                             {registerMessage && <p className="server-message">{registerMessage}</p>}
                         </div>
                         <div className="LoginButton">
-                            <button type="submit">Register</button>
+                            <button type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Register'}</button>
                         </div>
                         <div className="RegisterToggle">
                             <button type="button" onClick={toggleForm}>
@@ -223,6 +218,19 @@ function LogInPage() {
             </div>
         </div>
     );
+}
+
+async function authenticateUser(email, password) {
+    const response = await axios.post(`${API_BASE_URL}/users/authenticate`, {
+        username: email,
+        password: password,
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Api-Key': API_KEY,
+        }
+    });
+    return response;
 }
 
 export default LogInPage;
