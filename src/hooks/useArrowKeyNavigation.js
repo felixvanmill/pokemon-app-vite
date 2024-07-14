@@ -1,3 +1,4 @@
+//Hook is used to navigate on PokemonDetails. Left and Right arrow can be used to switch between Pokemon.
 import { useEffect } from 'react';
 
 const useArrowKeyNavigation = (pokemonId, navigate) => {

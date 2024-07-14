@@ -1,4 +1,5 @@
-// src/components/Navbar.jsx
+//Nav bar is above all pages and is used for navigation.
+// Navbar will collapse when the page gets too small.
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
@@ -10,17 +11,17 @@ const Navbar = () => {
     const [accountDropdown, setAccountDropdown] = useState(false);
     const navigate = useNavigate();
 
-    // Function to toggle sidebar visibility
+    // Toggle sidebar visibility
     const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
     const handleMouseEnter = () => setAccountDropdown(true);
     const handleMouseLeave = () => setAccountDropdown(false);
     const handleLogout = () => {
         logout();
-        navigate('/login');
+        navigate('/login'); // Navigate to login page after logout
         setSidebarOpen(false); // Close sidebar when logging out
     };
     const handleLogin = () => {
-        navigate('/login');
+        navigate('/login'); // Navigate to login page
         setSidebarOpen(false); // Close sidebar when logging in
     };
 
@@ -34,7 +35,7 @@ const Navbar = () => {
 
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    }, [isSidebarOpen]); // Dependencies array ensures effect runs only when isSidebarOpen changes
+    }, [isSidebarOpen]); // Run effect only when isSidebarOpen changes
 
     const accountLabel = isAuthenticated ? `Account (${currentUser?.email})` : "Login";
 

@@ -1,15 +1,15 @@
-// src/components/NoteSection.jsx
+//Notesection for MyPokemonpage. Saves written notes in localstorage since the API has limited possibilities.
 import React, { useEffect, useState } from 'react';
 
 const NoteSection = ({ pokemonName, notes, onSaveNote }) => {
     const [editNotes, setEditNotes] = useState(notes);
 
     useEffect(() => {
-        setEditNotes(notes); // Update the local state when the notes prop changes
+        setEditNotes(notes); // Update local state when notes prop changes
     }, [notes]);
 
     const handleSaveClick = () => {
-        onSaveNote(editNotes);
+        onSaveNote(editNotes); // Save the edited notes
     };
 
     return (

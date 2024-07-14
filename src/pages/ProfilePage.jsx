@@ -1,11 +1,8 @@
-// src/pages/ProfilePage.jsx
 import React, { useState, useEffect } from 'react';
 import '../styles/PagesStyles/ProfilePage.css';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
-
-const API_BASE_URL = 'https://api.datavortex.nl/pokemonapp';
-const API_KEY = 'pokemonapp:uHlwzGrkpZ45KU8J22aU';
+import axiosInstance from '../services/axiosInstance';
 
 function ProfilePage() {
     const [currentPassword, setCurrentPassword] = useState("");
@@ -13,7 +10,7 @@ function ProfilePage() {
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [updateMessage, setUpdateMessage] = useState("");
-    const { currentUser, token, updateUser } = useAuth();
+    const { currentUser, updateUser } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -58,24 +55,23 @@ function ProfilePage() {
         };
 
         try {
-            const response = await fetch(`${API_BASE_URL}/users/${currentUser.email}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Api-Key': API_KEY,
-                    'Authorization': `Bearer ${token}`, // Include the JWT token
-                },
-                body: JSON.stringify(requestBody),
-            });
+            console.log("Sending request to update password for:", currentUser.email); // Debugging
+            console.log("Request body:", requestBody); // Debugging
 
-            if (response.ok) {
+            const response = await axiosInstance.put(`/users/${currentUser.email}`, requestBody);
+
+            console.log("API Response:", response); // Debugging
+
+            if (response.status === 200 || response.status === 204) {
                 setUpdateMessage("Password updated successfully!");
                 updateUser({ password: newPassword });
             } else {
-                const errorData = await response.json();
+                const errorData = response.data;
+                console.error("Error data:", errorData); // Debugging
                 setPasswordError(errorData.message || "Failed to update password.");
             }
         } catch (error) {
+            console.error("Error during password update:", error); // Debugging
             setPasswordError("An error occurred during password update.");
         }
     };

@@ -1,6 +1,8 @@
+// ItemsPage contains a table with items that are used in the PokemonWorld.
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../styles/PagesStyles/ItemsPage.css';
+import { sortItems } from '../helpers/sortItems.js';
+import axios from 'axios';
 
 const ItemsPage = () => {
     const [items, setItems] = useState([]);
@@ -18,7 +20,7 @@ const ItemsPage = () => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const { data } = await axios.get('https://pokeapi.co/api/v2/item?limit=500');
+                const { data } = await axios.get('https://pokeapi.co/api/v2/item?limit=500'); // Fetches max 500 items
                 const itemsWithDetails = await Promise.all(data.results.map(async (item) => {
                     const itemDetails = await axios.get(item.url);
                     return {
@@ -41,22 +43,18 @@ const ItemsPage = () => {
     }, []);
 
     const handleSort = (field) => {
-        const sortedItems = [...items].sort((a, b) => {
-            if (a[field] < b[field]) return isAscending ? -1 : 1;
-            if (a[field] > b[field]) return isAscending ? 1 : -1;
-            return 0;
-        });
+        const sortedItems = sortItems(items, field, isAscending); // Sort the table
         setItems(sortedItems);
         setSortedField(field);
         setIsAscending(!isAscending);
     };
 
-    const uniqueCategories = [...new Set(items.map(item => item.category))];
+    const uniqueCategories = [...new Set(items.map(item => item.category))]; // Get unique categories to populate filters
 
     const filteredItems = items.filter(item =>
         (categoryFilter ? item.category === categoryFilter : true) &&
         (searchTerm ? item.name.toLowerCase().includes(searchTerm.toLowerCase()) : true) &&
-        (minCost ? item.price >= minCost : true) &&
+        (minCost ? item.price >= minCost : true) && // min and max filters for the filter area
         (maxCost ? item.price <= maxCost : true)
     );
 

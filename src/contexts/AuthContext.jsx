@@ -1,3 +1,4 @@
+//Context to store token and provide possibilities to login, logout, and update password.
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();

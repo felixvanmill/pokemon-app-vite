@@ -1,3 +1,4 @@
+//Homepage is used to display newsarticles, uses the component Newsitem.
 import React from 'react';
 import NewsItem from '../components/NewsItem.jsx';
 import '../styles/PagesStyles/HomePage.css';

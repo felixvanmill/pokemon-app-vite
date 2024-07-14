@@ -1,3 +1,4 @@
+//Button to navigate back from PokemonDetails to the previous page.
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,7 +7,6 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 const BackButton = ({ className = "back-button", ariaLabel = "Go back" }) => {
     const navigate = useNavigate();
 
-    // Function to navigate to the Pokémon list page
     const handleBack = () => {
         navigate('/pokemon');  // Navigate to Pokémon list page
     };

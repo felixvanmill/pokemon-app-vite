@@ -1,3 +1,4 @@
+//Returns Pokemondata used for PokemonPage.
 import { useState, useEffect } from 'react';
 import { fetchPokemons } from '../services/fetchPokemons';
 

@@ -1,3 +1,4 @@
+//Gets userEmail and sets it in localstorage to display e-mail in the navbar.
 import { useState, useEffect } from 'react';
 
 const useUserEmail = () => {

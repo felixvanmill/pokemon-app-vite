@@ -1,6 +1,8 @@
+//This page displays the Pokemons that are caught and non caught. User can also make comments/notes.
+// Users can drag and drop items from caught-to noncaught and vice-versa. Hence the rather
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { DndProvider } from 'react-dnd';
+import { DndProvider } from 'react-dnd'; // used to set up the drag-and-drop context for the application
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import '../styles/PagesStyles/MyPokemonPage.css';
 import { fetchPokemonDetails, fetchNotCaughtPokemons } from '../services/fetchPokemons.js';
@@ -29,13 +31,13 @@ const MyPokemonPage = () => {
     }, [caughtPokemons]);
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event) => { // Handles clicks outside of the dragging container.
             if (
                 mainContainerRef.current &&
                 !mainContainerRef.current.contains(event.target) &&
                 !event.target.closest('.notes-container')
             ) {
-                setSelectedPokemon(null);
+                setSelectedPokemon(null); // Deselects Pokemon if clicked outside
             }
         };
 
@@ -45,7 +47,7 @@ const MyPokemonPage = () => {
         };
     }, []);
 
-    const updateNotesIndicator = () => {
+    const updateNotesIndicator = () => { // Updates the small * that indicates that there's comments.
         const newNotesIndicator = {};
         caughtPokemons.forEach(pokemon => {
             const note = localStorage.getItem(`notes_${pokemon.name}`);
@@ -62,13 +64,13 @@ const MyPokemonPage = () => {
         setNotesIndicator(newNotesIndicator);
     };
 
-    const handleSearch = async (query) => {
+    const handleSearch = async (query) => { // Used to search the Pokemons.
         setSearchQuery(query);
         if (query.length < 3) {
             setSearchResults([]);
             return;
         }
-        const response = await axios.get(`${API_BASE_URL}?limit=151`);
+        const response = await axios.get(`${API_BASE_URL}?limit=151`); // Limits Pokemon to 151.
         const filteredPokemons = response.data.results.filter(pokemon =>
             pokemon.name.includes(query.toLowerCase())
         );
@@ -81,7 +83,7 @@ const MyPokemonPage = () => {
         setSearchResults(detailedPokemons);
     };
 
-    const handleAddPokemon = (selectedPokemons) => {
+    const handleAddPokemon = (selectedPokemons) => { // Adds selected Pokemons to the caught list.
         const newCaughtPokemons = [...caughtPokemons];
         selectedPokemons.forEach(pokemon => {
             if (!newCaughtPokemons.find(p => p.name === pokemon.name)) {
@@ -97,20 +99,20 @@ const MyPokemonPage = () => {
 
     const handleSelectPokemon = (pokemon, event) => {
         event.stopPropagation(); // Prevent the click from propagating to the main container
-        setSelectedPokemon(pokemon);
+        setSelectedPokemon(pokemon); // Sets the selected Pokemon
         const retrievedNotes = localStorage.getItem(`notes_${pokemon.name}`) || "";
         setNotes(retrievedNotes);
     };
 
-    const handleSaveNote = (note) => {
+    const handleSaveNote = (note) => { // Saves notes for the selected Pokemon.
         if (selectedPokemon) {
-            localStorage.setItem(`notes_${selectedPokemon.name}`, note);
+            localStorage.setItem(`notes_${selectedPokemon.name}`, note); // Saves notes
             setNotes(note);
             updateNotesIndicator();
         }
     };
 
-    const handleReleasePokemon = (pokemonName) => {
+    const handleReleasePokemon = (pokemonName) => { // Removes Pokemon from the caught list.
         const updatedCaughtPokemons = caughtPokemons.filter(pokemon => pokemon.name !== pokemonName);
         setCaughtPokemons(updatedCaughtPokemons.sort((a, b) => a.id - b.id));
         if (selectedPokemon && selectedPokemon.name === pokemonName) {
@@ -121,33 +123,33 @@ const MyPokemonPage = () => {
         updateNotesIndicator();
     };
 
-    const handleCheckboxChange = (pokemon, checked) => {
+    const handleCheckboxChange = (pokemon, checked) => { // Handles checkbox changes in the search results.
         setSelectedResults(prevSelectedResults => ({
             ...prevSelectedResults,
             [pokemon.name]: checked
         }));
     };
 
-    const handleAddSelectedPokemons = () => {
+    const handleAddSelectedPokemons = () => { // Adds selected Pokemons from the search results.
         const selectedPokemons = searchResults.filter(pokemon => selectedResults[pokemon.name]);
         handleAddPokemon(selectedPokemons);
     };
 
-    const handleMoveToCaught = (pokemonName) => {
+    const handleMoveToCaught = (pokemonName) => { // Moves Pokemon from not caught to caught.
         const movedPokemon = notCaughtPokemons.find(pokemon => pokemon.name === pokemonName);
         setCaughtPokemons([...caughtPokemons, movedPokemon].sort((a, b) => a.id - b.id));
         setNotCaughtPokemons(notCaughtPokemons.filter(pokemon => pokemon.name !== pokemonName).sort((a, b) => a.id - b.id));
         updateNotesIndicator();
     };
 
-    const handleMoveToNotCaught = (pokemonName) => {
+    const handleMoveToNotCaught = (pokemonName) => { // Moves Pokemon from caught to not caught.
         const movedPokemon = caughtPokemons.find(pokemon => pokemon.name === pokemonName);
         setNotCaughtPokemons([...notCaughtPokemons, movedPokemon].sort((a, b) => a.id - b.id));
         setCaughtPokemons(caughtPokemons.filter(pokemon => pokemon.name !== pokemonName).sort((a, b) => a.id - b.id));
         updateNotesIndicator();
     };
 
-    const handleViewDetails = (pokemonId) => {
+    const handleViewDetails = (pokemonId) => { // Links the user to the Pokemon details page.
         window.open(`http://localhost:5173/pokemon/${pokemonId}`, '_blank');
     };
 
@@ -155,12 +157,12 @@ const MyPokemonPage = () => {
         <PokemonItem
             key={pokemon.name}
             pokemon={pokemon}
-            onRelease={handleMoveToNotCaught}
+            onRelease={handleMoveToNotCaught} // Moves to not caught
             onCatch={null}
-            onSelect={handleSelectPokemon}
-            onViewDetails={handleViewDetails}
+            onSelect={handleSelectPokemon} // Selects Pokemon
+            onViewDetails={handleViewDetails} // Views details
             isSelected={selectedPokemon && selectedPokemon.name === pokemon.name}
-            hasNote={notesIndicator[pokemon.name]}
+            hasNote={notesIndicator[pokemon.name]} // Indicates if there are notes
         />
     );
 
@@ -168,12 +170,12 @@ const MyPokemonPage = () => {
         <PokemonItem
             key={pokemon.name}
             pokemon={pokemon}
-            onCatch={handleMoveToCaught}
+            onCatch={handleMoveToCaught} // Moves to caught
             onRelease={null}
-            onSelect={handleSelectPokemon}
-            onViewDetails={handleViewDetails}
+            onSelect={handleSelectPokemon} // Selects Pokemon
+            onViewDetails={handleViewDetails} // Views details
             isSelected={selectedPokemon && selectedPokemon.name === pokemon.name}
-            hasNote={notesIndicator[pokemon.name]}
+            hasNote={notesIndicator[pokemon.name]} // Indicates if there are notes
         />
     );
 

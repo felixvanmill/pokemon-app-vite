@@ -1,4 +1,4 @@
-// src/components/PokemonList.jsx
+// Creates a list of non-caught and caught Pokemon which is used in MyPokemonPage
 import React from 'react';
 
 const PokemonList = ({ title, pokemons, onSelectPokemon, onMovePokemon, isCaught }) => {
