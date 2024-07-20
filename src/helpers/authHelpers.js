@@ -1,4 +1,5 @@
-// Helper is used to handle authentication errors coming from logging in.
+// Helpers are used to handle authentication and errors coming from logging in and registering
+// isTokenExpired to check experation date of the Token.
 import axiosInstance from '../services/axiosInstance';
 
 export const validateEmail = (email) => {
@@ -6,13 +7,14 @@ export const validateEmail = (email) => {
     return re.test(email);
 };
 
+//used to register users
 export const registerUser = async (email, password, setRegisterMessage, setRegisterError) => {
     const requestBody = {
-        username: email,
+        username: email, //Currently no possibility to set a username so we'll just set it equal to e-mail.
         email: email,
         password: password,
         info: "",
-        authorities: [{ authority: "USER" }],
+        authorities: [{ authority: "USER" }], //can be used in future to give admin authorities.
     };
 
     try {
@@ -57,5 +59,22 @@ export const loginUser = async (email, password, login, navigate, setLoginMessag
     } catch (error) {
         console.error("Login error:", error); // Debugging
         setLoginError("An error occurred during login.");
+    }
+};
+
+//Checks for expiration date of the Token.
+export const isTokenExpired = (token) => {
+    if (!token) return true;
+
+    const tokenParts = token.split('.');
+    if (tokenParts.length < 3) return true;
+
+    try {
+        const payload = JSON.parse(atob(tokenParts[1]));
+        const exp = payload.exp;
+        const currentTime = Math.floor(Date.now() / 1000);
+        return currentTime >= exp;
+    } catch (e) {
+        return true;
     }
 };

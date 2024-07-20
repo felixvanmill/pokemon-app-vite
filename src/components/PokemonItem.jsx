@@ -1,6 +1,6 @@
 // This component is to create movable Pokemon containers for the MyPokemonPage.
 import React from 'react';
-import { useDrag } from 'react-dnd';
+import { useDrag } from 'react-dnd'; //This package is used to create movable components which can be dragged around
 import { FaInfoCircle } from 'react-icons/fa';
 import { ItemType } from '../services/constants';
 
@@ -15,7 +15,7 @@ const PokemonItem = ({ pokemon, onRelease, onCatch, onSelect, onViewDetails, isS
 
     return (
         <div
-            ref={drag} // Reference for drag-and-drop
+            ref={drag}
             className={`pokemon-item ${isSelected ? 'selected' : ''}`} // Conditional class for selected state
             style={{ opacity: isDragging ? 0.5 : 1 }} // Style change when dragging
             onClick={(e) => onSelect(pokemon, e)} // Handle item selection

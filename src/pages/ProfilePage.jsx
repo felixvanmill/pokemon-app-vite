@@ -1,8 +1,10 @@
+// src/pages/ProfilePage.js
 import React, { useState, useEffect } from 'react';
 import '../styles/PagesStyles/ProfilePage.css';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../services/axiosInstance';
+import axiosInstance from '../services/axiosInstance'; // Used to get bearer token and make authenticated HTTP requests
+import { isTokenExpired } from '../helpers/authHelpers'; // Import the helper
 
 function ProfilePage() {
     const [currentPassword, setCurrentPassword] = useState("");
@@ -14,15 +16,23 @@ function ProfilePage() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token && isTokenExpired(token)) {
+            localStorage.removeItem('token');
+            navigate('/login');
+        }
+    }, [navigate]);
+
+    useEffect(() => {
         if (newPassword !== confirmNewPassword) {
-            setPasswordError("Passwords do not match!");
+            setPasswordError("Passwords do not match!"); //Checks if passwords are matching.
         } else {
             setPasswordError("");
         }
     }, [newPassword, confirmNewPassword]);
 
     useEffect(() => {
-        if (newPassword.length > 0 && newPassword.length < 8) {
+        if (newPassword.length > 0 && newPassword.length < 8) { //Forces user to have a password of 8 characters or more
             setPasswordError("Password must be at least 8 characters long!");
         } else if (newPassword === confirmNewPassword) {
             setPasswordError("");
@@ -55,23 +65,16 @@ function ProfilePage() {
         };
 
         try {
-            console.log("Sending request to update password for:", currentUser.email); // Debugging
-            console.log("Request body:", requestBody); // Debugging
-
             const response = await axiosInstance.put(`/users/${currentUser.email}`, requestBody);
-
-            console.log("API Response:", response); // Debugging
 
             if (response.status === 200 || response.status === 204) {
                 setUpdateMessage("Password updated successfully!");
                 updateUser({ password: newPassword });
             } else {
                 const errorData = response.data;
-                console.error("Error data:", errorData); // Debugging
                 setPasswordError(errorData.message || "Failed to update password.");
             }
         } catch (error) {
-            console.error("Error during password update:", error); // Debugging
             setPasswordError("An error occurred during password update.");
         }
     };

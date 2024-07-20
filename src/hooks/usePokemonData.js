@@ -1,6 +1,6 @@
-//Returns Pokemondata used for PokemonPage.
+//Returns Pokemondata used for ../pages/PokemonPage.
 import { useState, useEffect } from 'react';
-import { fetchPokemons } from '../services/fetchPokemons';
+import { fetchPokemons } from '../services/fetchPokemons'; //Imports function to get Pokemondata from API.
 
 const usePokemonData = () => {
     const [pokemons, setPokemons] = useState([]);

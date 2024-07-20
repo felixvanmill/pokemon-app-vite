@@ -2,7 +2,7 @@
 // The component makes  containers with a Pokemon-img, an ID is added + the Pokemon name.
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/ComponentStyles/PokemonContainer.css'; // Import CSS for styling
+import '../styles/ComponentStyles/PokemonContainer.css';
 
 const PokemonContainer = ({ pokemons }) => {
     return (

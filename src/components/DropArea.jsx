@@ -1,6 +1,6 @@
 //Component to create a drop-area to drag and drop caught+noncaught Pokemons (used for MyPokemonpage).
 import React from 'react';
-import { useDrop } from 'react-dnd';
+import { useDrop } from 'react-dnd'; // Used to create drop-area.
 import { ItemType } from '../services/constants';
 
 const DropArea = ({ onDropPokemon, children }) => {
