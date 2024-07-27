@@ -29,6 +29,9 @@ Follow these steps to set up and run the project:
     git clone https://github.com/felixvanmill/pokemon-app-vite.git
     cd pokemon-app-vite
     ```
+OR
+
+1.1 **Open the provided ZIP-folder inside your code-editor.**
 
 2. **Install dependencies**:
    - These are the necessary packages to run the application. Run the code inside the terminal (For Webstorm, it has a terminal inside the program).
@@ -36,14 +39,8 @@ Follow these steps to set up and run the project:
     npm install
     ```
 
-3. **Set up environment variables inside the project folder**:
-   - You need this API key to make requests to the API itself. The code is not published in the project folder because it is supposed to remain secret.
-   - Create a `.env` file in the root directory of the project (where `package.json` is located).
-   - Copy in the necessary values:
-    ```plaintext
-    VITE_API_BASE_URL=https://api.datavortex.nl/pokemonapp
-    VITE_API_KEY=pokemonapp:uHlwzGrkpZ45KU8J22aU
-    ```
+3. **Set up environment variables**:
+   - Follow the steps in the "Setup Environment Variables" section above.
 
 4. **Start the development server with the terminal inside your code editor**:
    - This will start up the application.
