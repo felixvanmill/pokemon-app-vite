@@ -1,8 +1,6 @@
-//This page displays the Pokemons that are caught and non caught. User can also make comments/notes.
-// Users can drag and drop items from caught-to noncaught and vice-versa. Hence the rather
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { DndProvider } from 'react-dnd'; // used to set up the drag-and-drop context for the application
+import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import '../styles/PagesStyles/MyPokemonPage.css';
 import { fetchPokemonDetails, fetchNotCaughtPokemons } from '../services/fetchPokemons.js';
@@ -136,14 +134,24 @@ const MyPokemonPage = () => {
     };
 
     const handleMoveToCaught = (pokemonName) => { // Moves Pokemon from not caught to caught.
+        console.log(`Moving ${pokemonName} to caught`);
         const movedPokemon = notCaughtPokemons.find(pokemon => pokemon.name === pokemonName);
+        if (!movedPokemon) {
+            console.error(`Pokemon ${pokemonName} not found in notCaughtPokemons`);
+            return;
+        }
         setCaughtPokemons([...caughtPokemons, movedPokemon].sort((a, b) => a.id - b.id));
         setNotCaughtPokemons(notCaughtPokemons.filter(pokemon => pokemon.name !== pokemonName).sort((a, b) => a.id - b.id));
         updateNotesIndicator();
     };
 
     const handleMoveToNotCaught = (pokemonName) => { // Moves Pokemon from caught to not caught.
+        console.log(`Moving ${pokemonName} to not caught`);
         const movedPokemon = caughtPokemons.find(pokemon => pokemon.name === pokemonName);
+        if (!movedPokemon) {
+            console.error(`Pokemon ${pokemonName} not found in caughtPokemons`);
+            return;
+        }
         setNotCaughtPokemons([...notCaughtPokemons, movedPokemon].sort((a, b) => a.id - b.id));
         setCaughtPokemons(caughtPokemons.filter(pokemon => pokemon.name !== pokemonName).sort((a, b) => a.id - b.id));
         updateNotesIndicator();
@@ -153,31 +161,37 @@ const MyPokemonPage = () => {
         window.open(`http://localhost:5173/pokemon/${pokemonId}`, '_blank');
     };
 
-    const renderCaughtPokemon = (pokemon) => (
-        <PokemonItem
-            key={pokemon.name}
-            pokemon={pokemon}
-            onRelease={handleMoveToNotCaught} // Moves to not caught
-            onCatch={null}
-            onSelect={handleSelectPokemon} // Selects Pokemon
-            onViewDetails={handleViewDetails} // Views details
-            isSelected={selectedPokemon && selectedPokemon.name === pokemon.name}
-            hasNote={notesIndicator[pokemon.name]} // Indicates if there are notes
-        />
-    );
+    const renderCaughtPokemon = (pokemon) => {
+        if (!pokemon || !pokemon.name) return null; // Add null check
+        return (
+            <PokemonItem
+                key={pokemon.name}
+                pokemon={pokemon}
+                onRelease={handleMoveToNotCaught} // Moves to not caught
+                onCatch={null}
+                onSelect={handleSelectPokemon} // Selects Pokemon
+                onViewDetails={handleViewDetails} // Views details
+                isSelected={selectedPokemon && selectedPokemon.name === pokemon.name}
+                hasNote={notesIndicator[pokemon.name]} // Indicates if there are notes
+            />
+        );
+    };
 
-    const renderNotCaughtPokemon = (pokemon) => (
-        <PokemonItem
-            key={pokemon.name}
-            pokemon={pokemon}
-            onCatch={handleMoveToCaught} // Moves to caught
-            onRelease={null}
-            onSelect={handleSelectPokemon} // Selects Pokemon
-            onViewDetails={handleViewDetails} // Views details
-            isSelected={selectedPokemon && selectedPokemon.name === pokemon.name}
-            hasNote={notesIndicator[pokemon.name]} // Indicates if there are notes
-        />
-    );
+    const renderNotCaughtPokemon = (pokemon) => {
+        if (!pokemon || !pokemon.name) return null; // Add null check
+        return (
+            <PokemonItem
+                key={pokemon.name}
+                pokemon={pokemon}
+                onCatch={handleMoveToCaught} // Moves to caught
+                onRelease={null}
+                onSelect={handleSelectPokemon} // Selects Pokemon
+                onViewDetails={handleViewDetails} // Views details
+                isSelected={selectedPokemon && selectedPokemon.name === pokemon.name}
+                hasNote={notesIndicator[pokemon.name]} // Indicates if there are notes
+            />
+        );
+    };
 
     return (
         <DndProvider backend={HTML5Backend}>

@@ -77,7 +77,7 @@ function LogInPage() {
 
     const toggleForm = () => {
         setIsRegistering(!isRegistering);
-        resetForm();
+        resetForm(); //Toggles form from login to register
     };
 
     const resetForm = () => {
