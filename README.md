@@ -14,7 +14,7 @@ This installation guide is for the Pokemon-App-Vite application. The source code
 
 ## Screenshot
 
-![Screenshot](C:\Users\felix\Desktop\NOVI\Frontend\pokemon-app-vite\src\Images\screenshotlogin.png)
+![Screenshot](https://github.com/felixvanmill/pokemon-app-vite/blob/main/src/Images/screenshotlogin.png)
 
 ## Prerequisites
 To run the React application, ensure you have the following packages and installations:
