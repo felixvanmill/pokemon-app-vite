@@ -6,13 +6,10 @@ To ensure the application works correctly, you need to set up environment variab
 
 ### Steps to Set Up Environment Variables
 
-1. **Create a .env file**:
-   - In the root directory of the project (where `package.json` is located), create a file named `.env`.
+1. **Adjust the .env file**:
+   - In the root directory of the project (where `package.json` is located), adjust the file named `.env`.
 
-2. **Copy variable names from .env.dist**:
-   - Open the `.env.dist` file, copy all the variable names, and paste them into the `.env` file.
-
-3. **Assign appropriate values**:
+2. **Assign appropriate values**:
    - Assign the necessary values to the variables in the `.env` file:
 
     ```plaintext
