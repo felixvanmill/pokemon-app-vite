@@ -47,8 +47,8 @@ To get the application up and running, follow these steps:
     - Adjust the `.env` file in the root directory of the project (where `package.json` is located).
     - Copy in the necessary values:
       ```plaintext
-      VITE_API_BASE_URL=https://api.datavortex.nl/pokemonapp
-      VITE_API_KEY=pokemonapp:uHlwzGrkpZ45KU8J22aU
+      VITE_API_BASE_URL= See Login + API Key.txt in the ZIP folder
+      VITE_API_KEY= See Login + API Key.txt in the ZIP folder
       ```
 
 4. **Start the Development Server**
@@ -60,10 +60,10 @@ To get the application up and running, follow these steps:
     - Open your browser and navigate to the localhost link as provided by the environment.
 
 
-## Test Users
+## Test Users (Please find the attatched file in the ZIP-folder with this info)
 - **Admin User**
-    - Email: `adminfelix@gmail.com`
-    - Password: `admin123123`
+    - Email: `See Login + API Key.txt in the ZIP folder`
+    - Password: `See Login + API Key.txt in the ZIP folder`
 
 ## Application Walkthrough
 ### Login Page
